@@ -1,11 +1,106 @@
-# Visual Studio / .NET
+## Visual Studio / .NET
 **/bin/
 **/obj/
 **/.vs/
 *.user
 *.suo
 *.cache
+*.rsuser
+*.sln.docstates
+*.userosscache
+*.userprefs
+mono_crash.*
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*.obj
+*.pdb
+*.log
+*.tmp
+*.svclog
+
+# ReSharper / Rider / JetBrains
+_ReSharper*/
+*.DotSettings.user
+
+# Code coverage
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+
+# Azure / Publish
+*.azurePubxml
+*.pubxml
+*.publishproj
+PublishScripts/
+
+# SQL Server
+*.mdf
+*.ldf
+*.ndf
+
+# Misc
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+*.GhostDoc.xml
+
+# OS / system
+Thumbs.db
+.DS_Store
 
 # Node / frontend
-Frontend/ProjektNavnFrontend/node_modules/
-Frontend/ProjektNavnFrontend/dist/
+node_modules/
+dist/
+
+# Python
+__pycache__/
+*.pyc
+
+# Backup / temp
+~$*
+*~
+*.bak
+MigrationBackup/
+
+# App settings (credentials)
+appsettings.json
