@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36705.20
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackingDeviceLib", "TrackingDeviceLib\TrackingDeviceLib.csproj", "{673015FA-1A48-4071-8EAB-84FE1674AC79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackingDeviceREST", "TrackingDeviceREST\TrackingDeviceREST.csproj", "{2C3EB405-C11E-4686-A376-C5FC7871BF04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{673015FA-1A48-4071-8EAB-84FE1674AC79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{673015FA-1A48-4071-8EAB-84FE1674AC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{673015FA-1A48-4071-8EAB-84FE1674AC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{673015FA-1A48-4071-8EAB-84FE1674AC79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C3EB405-C11E-4686-A376-C5FC7871BF04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C3EB405-C11E-4686-A376-C5FC7871BF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C3EB405-C11E-4686-A376-C5FC7871BF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C3EB405-C11E-4686-A376-C5FC7871BF04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29068A73-DAF5-4A40-B741-D0313AE75FFD}
+	EndGlobalSection
+EndGlobal

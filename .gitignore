@@ -1,0 +1,11 @@
+# Visual Studio / .NET
+**/bin/
+**/obj/
+**/.vs/
+*.user
+*.suo
+*.cache
+
+# Node / frontend
+Frontend/ProjektNavnFrontend/node_modules/
+Frontend/ProjektNavnFrontend/dist/
