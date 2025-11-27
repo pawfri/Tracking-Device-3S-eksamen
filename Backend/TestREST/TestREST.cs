@@ -1,7 +1,7 @@
 ﻿namespace TestREST
 {
     [TestClass]
-    public sealed class Test1
+    public sealed class TestREST
     {
         [TestMethod]
         public void TestMethod1()
