@@ -22,5 +22,20 @@ namespace TestSeleniumVue
 			//Assert
 			Assert.AreEqual("Find", buttonText);
 		}
-    }
+
+		[TestMethod] // Formel for en automatiseret test, den virker ikke for vores projekt, men den kan bruges som inspiration
+		public void TestMethod2()
+		{
+			IWebDriver driver = new ChromeDriver();
+			driver.Navigate().GoToUrl(@"http://127:0.0.1:5500");
+
+			var searchbox = driver.FindElement(By.Name("q"));
+			searchbox.SendKeys("Selenium");
+			searchbox.Submit();
+
+			Assert.IsTrue(driver.Title.Contains("Selenium"));
+			driver.Quit();
+
+		}
+	}
 }
