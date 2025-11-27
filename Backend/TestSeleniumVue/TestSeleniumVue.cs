@@ -6,7 +6,7 @@ namespace TestSeleniumVue
 	public sealed class TestSeleniumVue
 	{
 		[TestMethod]
-		public void TestMethod1()
+		public void DoesTheFindButtonExist()
 		{
 
 			//Arrange
@@ -16,12 +16,11 @@ namespace TestSeleniumVue
 			driver.Navigate().GoToUrl(@"http://127:0.0.1:5500");
 
 			//Act
-			IWebElement button = driver.FindElement(By.Id("testButton1"));
+			IWebElement button = driver.FindElement(By.Id("findButton"));
 			var buttonText = button.Text;
 
 			//Assert
-			Assert.AreEqual("Click Me", buttonText);
-
+			Assert.AreEqual("Find", buttonText);
 		}
-	}
+    }
 }
