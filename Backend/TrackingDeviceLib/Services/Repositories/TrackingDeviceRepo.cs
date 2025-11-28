@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrackingDeviceLib.Services.Interfaces;
 
 namespace TrackingDeviceLib.Services.Repositories;
 
-public class TrackingDeviceRepo
+public class TrackingDeviceRepo : ITrackingDeviceRepo
 {
 	private readonly List<Location> _locations = new();
 	private int _nextId = 1;
