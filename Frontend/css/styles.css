@@ -7,7 +7,21 @@ h1 {
   background-color: #98FB98;
   padding: 3.5rem 6.5rem;
   font-weight: bold;
-  margin: 0.5rem 1rem 0.5rem 1rem;
+  margin: 0.5rem -2rem 0.25rem 1rem;
+}
+
+.stopKnap {
+  background-color: #FF0000;
+  padding: 0.75rem 2rem;
+  font-weight: bold;
+  margin: 0.25rem -2rem 0.25rem 1rem;
+}
+
+.stopIndicatorsKnap {
+  background-color: #FFC72C;
+  padding: 0.75rem 2rem;
+  font-weight: bold;
+  margin: 0.25rem -2rem 0.5rem 1rem;
 }
 
 .findKnapDiv {
