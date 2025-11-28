@@ -3,11 +3,11 @@
 public class Location
 {
 	public int Id { get; set; }
-	public string Longitude { get; set; }
-	public string Latitude { get; set; }
+	public double Longitude { get; set; }
+	public double Latitude { get; set; }
 	public DateTime Date { get; set; }
 
-	public Location(int id, string longitude, string latitude, DateTime date)
+	public Location(int id, double longitude, double latitude, DateTime date)
 	{
 		Id = id;
 		Longitude = longitude;
