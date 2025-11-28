@@ -7,9 +7,9 @@ public class Location
 	public double Latitude { get; set; }
 	public DateTime Date { get; set; }
 
-	public Location(int id, double longitude, double latitude, DateTime date)
+	public Location(double longitude, double latitude, DateTime date)
 	{
-		Id = id;
+		//Id = id;
 		Longitude = longitude;
 		Latitude = latitude;
 		Date = date;
