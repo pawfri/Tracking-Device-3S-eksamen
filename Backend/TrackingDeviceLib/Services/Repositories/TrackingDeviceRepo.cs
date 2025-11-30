@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrackingDeviceLib.Models;
 using TrackingDeviceLib.Services.Interfaces;
 
 namespace TrackingDeviceLib.Services.Repositories;

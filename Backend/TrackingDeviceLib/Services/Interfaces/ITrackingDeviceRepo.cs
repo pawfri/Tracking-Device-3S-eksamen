@@ -1,4 +1,6 @@
-﻿namespace TrackingDeviceLib.Services.Interfaces
+﻿using TrackingDeviceLib.Models;
+
+namespace TrackingDeviceLib.Services.Interfaces
 {
 	public interface ITrackingDeviceRepo
 	{

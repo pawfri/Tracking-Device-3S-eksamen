@@ -1,4 +1,4 @@
-﻿namespace TrackingDeviceLib;
+﻿namespace TrackingDeviceLib.Models;
 
 public class Location
 {
