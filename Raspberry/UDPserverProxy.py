@@ -2,15 +2,15 @@ from socket import *
 import requests # install this library: $ python -m pip install requests
 import json
 
-PORT = 17000
+PORT = 17001
 
 sock_receiver = socket(AF_INET, SOCK_DGRAM)
-sock_receiver.bind(('', PORT))
+sock_receiver.bind(("", PORT))
 
 print("Proxy UDP Receiver started")
 print(f'Listening for incoming UDP messages on port {PORT}')
 
-REST_API_URL = 'http://localhost:5226/api/TrackingDeviceController'
+REST_API_URL = 'http://localhost:5226/api/TrackingDevice'
 
 while True:
     msg, clientAdr = sock_receiver.recvfrom(3000)

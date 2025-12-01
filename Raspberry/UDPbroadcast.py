@@ -3,16 +3,20 @@ import time
 import json
 import gps
 
-BROADCAST_IP = "255.255.255.255"
+BROADCAST_IP = "192.168.103.255"
 PORT = 17000
 
-# --- Setup UDP Broadcast socket ---
+print("her er jeg 1...")
+
+# Setup UDP Broadcast socket
 sock_sender = socket(AF_INET, SOCK_DGRAM)
 sock_sender.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+sock_sender.bind(("", 0))
 
-# --- Setup GPSD ---
-session = gps.gps("localhost", "2947")
-session.stream(gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
+print("her er jeg 2...")
+
+#Setup GPSD
+session = gps.gps(mode=gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
 
 print("Starting GPS broadcast...")
 
@@ -45,5 +49,3 @@ while True:
     except StopIteration:
         print("Lost connection to gpsd.")
         break
-
-sock_sender.close()
