@@ -12,24 +12,29 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<TrackingDeviceRepo>();
 
-var app = builder.Build();
-
 builder.Services.AddCors(options =>
 {
-options.AddPolicy("allowAnything", // similar to * in Azure
+    //options.AddPolicy("allowGetPut",
+    //builder =>
+    //builder.AllowAnyOrigin()
+    //.WithMethods("GET", "PUT")
+    //.AllowAnyHeader());
+
+    options.AddPolicy("allowAnything",
 	builder =>
-		builder.AllowAnyOrigin()
-			.AllowAnyMethod()
-			.AllowAnyHeader());
-	
-}
-);
-app.UseCors("allowAnything");
+	builder.AllowAnyOrigin()
+	.AllowAnyMethod()
+	.AllowAnyHeader());
+});
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapOpenApi();
+
+app.UseCors("allowAnything");
 
 app.UseAuthorization();
 
