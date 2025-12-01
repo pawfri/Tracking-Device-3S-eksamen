@@ -11,13 +11,13 @@ namespace TrackingDeviceLib.Services.Repositories;
 public class TrackingDeviceRepo : ITrackingDeviceRepo
 {
 	private readonly List<Location> _locations = new();
-	private int _nextId = 1;
+	private int _nextId = 4;
 
     public TrackingDeviceRepo()
     {
-        _locations.Add(new Location(10.0000, 20.0000, DateTime.Parse("2025-01-12T11:15:00")));
-        _locations.Add(new Location(10.0000, 20.0000, DateTime.Parse("2025-01-12T12:16:00")));
-        _locations.Add(new Location(10.0000, 20.0000, DateTime.Parse("2025-01-12T13:17:00")));
+        _locations.Add(new Location(1, 10.0000, 20.0000, DateTime.Parse("2025-01-12T11:15:00")));
+        _locations.Add(new Location(2 ,10.0000, 20.0000, DateTime.Parse("2025-01-12T12:16:00")));
+        _locations.Add(new Location(3, 10.0000, 20.0000, DateTime.Parse("2025-01-12T13:17:00")));
     }
 
     public List<Location> GetAll()

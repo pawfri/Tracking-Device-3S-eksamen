@@ -9,9 +9,16 @@ public class Location
 
 	public Location(double longitude, double latitude, DateTime date)
 	{
-		//Id = id;
 		Longitude = longitude;
 		Latitude = latitude;
 		Date = date;
 	}
+
+    public Location(int id, double longitude, double latitude, DateTime date)
+    {
+        Id = id;
+        Longitude = longitude;
+        Latitude = latitude;
+        Date = date;
+    }
 }
