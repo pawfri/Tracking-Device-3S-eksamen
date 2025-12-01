@@ -1,29 +1,49 @@
 from socket import *
 import time
 import json
+import gps
 
-BROADCAST_IP = '255.255.255.255' #special IP address for broadcast
+BROADCAST_IP = "255.255.255.255"
 PORT = 17000
 
+# --- Setup UDP Broadcast socket ---
 sock_sender = socket(AF_INET, SOCK_DGRAM)
 sock_sender.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
-MockLokationer = [  {
-    "id": 1,
-    "longitude": 10,
-    "latitude": 11,
-    "date": "2025-12-01T09:37:02.681Z"
-  },
-  {
-    "id": 2,
-    "longitude": 20,
-    "latitude": 30,
-    "date": "2025-12-01T09:37:02.681Z"
-  }]
+# --- Setup GPSD ---
+session = gps.gps("localhost", "2947")
+session.stream(gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
 
-message: str = json.dumps(MockLokationer)
-print(f'Broadcaster sending: {message}')
-sock_sender.sendto(message.encode(), (BROADCAST_IP, PORT))
-time.sleep(5) # sleep for 2 seconds between messages
+print("Starting GPS broadcast...")
+
+while True:
+    try:
+        report = session.next()
+
+        if report.get("class") == "TPV":
+            lat = getattr(report, "lat", None)
+            lon = getattr(report, "lon", None)
+            timestamp = getattr(report, "time", None)
+
+            if lat is not None and lon is not None:
+                data = {
+                    "latitude": lat,
+                    "longitude": lon,
+                    "timestamp": timestamp
+                }
+
+                message = json.dumps(data)
+
+                print(f"Broadcasting: {message}")
+                sock_sender.sendto(message.encode(), (BROADCAST_IP, PORT))
+
+        time.sleep(10)
+
+    except KeyboardInterrupt:
+        print("Stopping GPS broadcast.")
+        break
+    except StopIteration:
+        print("Lost connection to gpsd.")
+        break
 
 sock_sender.close()
