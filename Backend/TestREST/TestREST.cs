@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Threading;
 using TrackingDeviceLib;
+using TrackingDeviceLib.Models;
 using TrackingDeviceLib.Services.Repositories;
 //using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
