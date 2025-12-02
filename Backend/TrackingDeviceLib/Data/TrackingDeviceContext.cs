@@ -16,4 +16,9 @@ public class TrackingDeviceContext : DbContext
     }
 
     public DbSet<Location> Locations { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Location>().ToTable("Tracking_Location");
+    }
 }

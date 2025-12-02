@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TrackingDeviceLib.Models;
+using TrackingDeviceLib.Services.Interfaces;
 using TrackingDeviceLib.Services.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,9 +11,9 @@ namespace TrackingDeviceREST.Controllers;
 [ApiController]
 public class TrackingDeviceController : ControllerBase
 {
-	private TrackingDeviceRepo _repo;
+	private ITrackingDeviceRepo _repo;
 
-	public TrackingDeviceController(TrackingDeviceRepo repo)
+	public TrackingDeviceController(ITrackingDeviceRepo repo)
 	{
 		_repo = repo;
 	}
