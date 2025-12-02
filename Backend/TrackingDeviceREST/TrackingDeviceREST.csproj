@@ -21,4 +21,10 @@
     <ProjectReference Include="..\TrackingDeviceLib\TrackingDeviceLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="TrackingDeviceLib">
+      <HintPath>External DLL\TrackingDeviceLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
