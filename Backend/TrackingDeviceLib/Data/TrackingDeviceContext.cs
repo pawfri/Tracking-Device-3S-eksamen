@@ -15,5 +15,5 @@ public class TrackingDeviceContext : DbContext
     {
     }
 
-    public DbSet<Location> locations { get; set; }
+    public DbSet<Location> Locations { get; set; }
 }

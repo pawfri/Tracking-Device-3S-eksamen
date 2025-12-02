@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TrackingDeviceLib.Data;
+using TrackingDeviceLib.Models;
+using TrackingDeviceLib.Services.Interfaces;
+
+namespace TrackingDeviceLib.Services.Repositories;
+
+public class TrackingDeviceDBRepo : ITrackingDeviceRepo
+{
+    private readonly TrackingDeviceContext _context;
+
+    public TrackingDeviceDBRepo(TrackingDeviceContext context)
+    {
+        _context = context;
+    }
+
+    public Location Add(Location location)
+    {
+        _context.Locations.Add(location);
+        _context.SaveChanges();
+        return location;
+    }
+
+    public List<Location> GetAll()
+    {
+        return _context.Locations.ToList();
+    }
+
+    public Location? GetById(int id)
+    {
+        return _context.Locations.Find(id);
+    }
+}
