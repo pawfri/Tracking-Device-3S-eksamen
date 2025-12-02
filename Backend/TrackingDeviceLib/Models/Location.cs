@@ -1,13 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace TrackingDeviceLib.Models;
 
 public class Location
 {
+    private DateTime _date;
+
     public int Id { get; set; }
 	public double Longitude { get; set; }
 	public double Latitude { get; set; }
-	public DateTime Date { get; set; }
+    
+    [JsonPropertyName("timestamp")]
+    public DateTime Date
+    {
+        get => _date;
+        set
+        {
+            // Treat incoming value as UTC, then convert to UTC+1 (CET)
+            var utcDate = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+            _date = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(utcDate, "Central European Standard Time");
+        }
+    }
 
     public Location() { }
 
