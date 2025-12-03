@@ -22,7 +22,7 @@ const app = Vue.createApp({
                 console.log(response.status);
             })
             .catch(error => {
-                console.error("Kunne ikke hente data og sætte dem ind i listen", error);
+                console.error("Couldn't retrieve data", error);
             });
 
         },
