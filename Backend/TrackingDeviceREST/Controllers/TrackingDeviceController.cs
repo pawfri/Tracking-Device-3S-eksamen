@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TrackingDeviceLib.Models;
 using TrackingDeviceLib.Services.Interfaces;
 using TrackingDeviceLib.Services.Repositories;
@@ -12,13 +14,17 @@ namespace TrackingDeviceREST.Controllers;
 public class TrackingDeviceController : ControllerBase
 {
 	private ITrackingDeviceRepo _repo;
+	public Location _latestLocation;
+    //private List<Location> _locationBuffer = new List<Location>();
+    //private static DateTime _lastFlushTime = DateTime.UtcNow;
+
 
 	public TrackingDeviceController(ITrackingDeviceRepo repo)
 	{
 		_repo = repo;
 	}
-	
-	
+
+
 	// GET: api/<TrackingDeviceController>
 	[HttpGet]
 	public IEnumerable<Location> Get()
@@ -35,20 +41,80 @@ public class TrackingDeviceController : ControllerBase
 
 	// POST api/<TrackingDeviceController>
 	[HttpPost]
-	public Location Post([FromBody] Location value)
+	public Location? PostTrackButton([FromBody] Location value)
 	{
-		return _repo.Add(value);
+		value = _latestLocation;
+        return _repo.Add(value);
+
+		
 	}
 
-	//// PUT api/<TrackingDeviceController>/5
-	//[HttpPut("{id}")]
-	//public void Put(int id, [FromBody] string value)
-	//{
-	//}
+    [HttpPost]
+    public Location? Post([FromBody] Location value)
+    {
+        value = _latestLocation;
 
-	//// DELETE api/<TrackingDeviceController>/5
-	//[HttpDelete("{id}")]
-	//public void Delete(int id)
-	//{
-	//}
+        if((DateTime.UtcNow.Minute - value.Date.Minute) >= 3)
+        {
+            return _repo.Add(value);
+        }
+        else
+        {
+            return null;
+        }
+
+        //if (value.Date.Minute <= 3 DateTime.Now)
+        //{
+        //    value = _latestLocation;
+        //    return _repo.Add(value);
+        //}
+        //else
+        //{
+        //    return null;
+        //}
+    }
+
+    //[HttpPost("broadcast-location")]
+    //public IActionResult BroadcastLocation([FromBody] Location locationDto)
+    //{
+    //    var newLocation = new Location
+    //    {
+    //        Longitude = locationDto.Longitude,
+    //        Latitude = locationDto.Latitude,
+    //        Date = locationDto.Date
+    //    };
+
+    //    _locationBuffer.Add(newLocation);
+
+    //    // Tjek om der er gået 10 minutter
+    //    if ((DateTime.UtcNow - _lastFlushTime).TotalMinutes >= 10)
+    //    {
+    //        _repo.Locations.AddRange(_locationBuffer);
+    //        _repo.Add();
+
+    //        _locationBuffer.Clear();
+    //        _lastFlushTime = DateTime.UtcNow;
+    //    }
+
+    //    return Ok("Location buffered");
+    //}
+
+
+    //[HttpPost]
+    //public Location TrackButtonPressed(int value)
+    //{
+    //	return
+    //}
+
+    //// PUT api/<TrackingDeviceController>/5
+    //[HttpPut("{id}")]
+    //public void Put(int id, [FromBody] string value)
+    //{
+    //}
+
+    //// DELETE api/<TrackingDeviceController>/5
+    //[HttpDelete("{id}")]
+    //public void Delete(int id)
+    //{
+    //}
 }
