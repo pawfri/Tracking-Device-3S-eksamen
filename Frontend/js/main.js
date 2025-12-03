@@ -10,7 +10,14 @@ const app = Vue.createApp({
         getDataFromRaspberry(){
             axios.get(baseUri)
             .then(response => {
-                this.logninger = response.data
+                this.logninger = response.data.map(item => ({
+                    timestamp: item.timestamp,
+                    status: item.status,
+                    event: item.event,
+                    address: item.address,
+                    coordinates: item.coordinates,
+                    selected: false
+                }) )
                 console.log(this.logninger)
                 console.log(response.status);
             })
