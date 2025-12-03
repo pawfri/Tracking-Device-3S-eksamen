@@ -33,6 +33,13 @@ h1 {
 
 .Section1 {
   display: flex;
+  margin-left: 50px;
+}
+
+.Section1 p {
+  font-size: 30px;
+  line-height: 1.4;
+  font-weight: bold;
 }
 
 .placeholderKort {
