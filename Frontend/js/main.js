@@ -28,6 +28,11 @@ const app = Vue.createApp({
         },
     },
     computed: {
+        sortedLoggings() {
+            return this.loggings.slice().sort((a, b) => {
+                return new Date(b.timestamp) - new Date(a.timestamp);
+            });
+        },
         myComputed() {
             return ''
         },

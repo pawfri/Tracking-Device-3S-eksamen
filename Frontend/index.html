@@ -37,7 +37,7 @@
 
         <section class="Section2">
           <table class="table table-bordered table-striped w-100">
-            <thread class="thread-dark">
+            <thead class="thead-dark">
               <tr>
                 <th>Tidspunkt</th>
                 <th>Status</th>
@@ -46,9 +46,9 @@
                 <th>Koordinater</th>
                 <th>Aktion</th>
               </tr>
-            </thread>
+            </thead>
             <tbody>
-              <tr v-for="(log, index) in logninger" :key="index">
+              <tr v-for="(log, index) in sortedLoggings" :key="index">
                 <td>{{ log.timestamp }}</td>
                 <td>{{ log.status }}</td>
                 <td>{{ log.event}}</td>
