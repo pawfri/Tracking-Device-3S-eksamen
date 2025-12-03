@@ -14,7 +14,8 @@ namespace TrackingDeviceREST.Controllers;
 public class TrackingDeviceController : ControllerBase
 {
 	private ITrackingDeviceRepo _repo;
-	public Location _latestLocation;
+	public static Location? _latestLocation;
+    public static DateTime _lastSavedTime = DateTime.MinValue;
     //private List<Location> _locationBuffer = new List<Location>();
     //private static DateTime _lastFlushTime = DateTime.UtcNow;
 
@@ -39,63 +40,35 @@ public class TrackingDeviceController : ControllerBase
 		return _repo.GetById(id);
 	}
 
-	// POST api/<TrackingDeviceController>
-	[HttpPost("trackingbutton")]
-	public Location? PostTrackButton([FromBody] Location value)
-	{
-		value = _latestLocation;
-        return _repo.Add(value);
-	}
-
-    [HttpPost("")]
-    public Location? Post([FromBody] Location value)
+    // POST api/<TrackingDeviceController>
+    [HttpPost("trackingbutton")]
+    public IActionResult PostTrackButton()
     {
-        value = _latestLocation;
+        if (_latestLocation == null)
+            return BadRequest("No location received yet");
 
-        if((DateTime.UtcNow.Minute - value.Date.Minute) >= 3)
-        {
-            return _repo.Add(value);
-        }
-        else
-        {
-            return null;
-        }
-
-        //if (value.Date.Minute <= 3 DateTime.Now)
-        //{
-        //    value = _latestLocation;
-        //    return _repo.Add(value);
-        //}
-        //else
-        //{
-        //    return null;
-        //}
+        return Ok(_repo.Add(_latestLocation));
     }
 
-    //[HttpPost("broadcast-location")]
-    //public IActionResult BroadcastLocation([FromBody] Location locationDto)
-    //{
-    //    var newLocation = new Location
-    //    {
-    //        Longitude = locationDto.Longitude,
-    //        Latitude = locationDto.Latitude,
-    //        Date = locationDto.Date
-    //    };
+    [HttpPost("")]
+    public IActionResult Post([FromBody] Location value)
+    {
+        if (value == null)
+            return BadRequest("Location is empty");
 
-    //    _locationBuffer.Add(newLocation);
+        // Gem den nyeste lokation i memory
+        _latestLocation = value;
 
-    //    // Tjek om der er gået 10 minutter
-    //    if ((DateTime.UtcNow - _lastFlushTime).TotalMinutes >= 10)
-    //    {
-    //        _repo.Locations.AddRange(_locationBuffer);
-    //        _repo.Add();
+        // Hvis det er første gang eller der er gået 10 minutter
+        if ((DateTime.UtcNow - _lastSavedTime).TotalMinutes >= 10)
+        {
+            _lastSavedTime = DateTime.UtcNow;
+            return Ok(_repo.Add(value));
+        }
 
-    //        _locationBuffer.Clear();
-    //        _lastFlushTime = DateTime.UtcNow;
-    //    }
-
-    //    return Ok("Location buffered");
-    //}
+        // Ellers gemmer vi ikke endnu
+        return Ok("Location updated, but not saved yet");
+    }
 
 
     //[HttpPost]
