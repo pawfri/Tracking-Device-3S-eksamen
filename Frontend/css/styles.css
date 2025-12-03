@@ -3,28 +3,28 @@ h1 {
     color: blue;
   }
 
-.findKnap {
+.findButton {
   background-color: #98FB98;
   padding: 3.5rem 6.5rem;
   font-weight: bold;
   margin: 0.5rem -2rem 0.25rem 1rem;
 }
 
-.stopKnap {
+.stopButton {
   background-color: #FF0000;
   padding: 0.75rem 2rem;
   font-weight: bold;
   margin: 0.25rem -2rem 0.25rem 1rem;
 }
 
-.stopIndicatorsKnap {
+.stopIndicatorsButton {
   background-color: #FFC72C;
   padding: 0.75rem 2rem;
   font-weight: bold;
   margin: 0.25rem -2rem 0.5rem 1rem;
 }
 
-.findKnapDiv {
+.findButtonDiv {
   margin-left: 45rem;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@ h1 {
   font-weight: bold;
 }
 
-.placeholderKort {
+.placeholderMap {
   width: 25rem;
   height: 20rem;
   background-color: blue;

@@ -2,7 +2,7 @@ const app = Vue.createApp({
     data() {
         return {
             intro: 'Welcome to my Vue template',
-            logninger:[],
+            loggings:[],
             device: '',
         }
     },
@@ -10,7 +10,7 @@ const app = Vue.createApp({
         getDataFromRaspberry(){
             axios.get(baseUri)
             .then(response => {
-                this.logninger = response.data.map(item => ({
+                this.loggings = response.data.map(item => ({
                     timestamp: item.timestamp,
                     status: item.status,
                     event: item.event,
@@ -18,7 +18,7 @@ const app = Vue.createApp({
                     coordinates: item.coordinates,
                     selected: false
                 }) )
-                console.log(this.logninger)
+                console.log(this.loggings)
                 console.log(response.status);
             })
             .catch(error => {
