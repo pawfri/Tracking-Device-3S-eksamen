@@ -35,6 +35,30 @@
 
         </section>
 
+        <section class="Section2">
+          <table class="table table-bordered table-striped w-100">
+            <thread class="thread-dark">
+              <tr>
+                <th>Dato & Tid</th>
+                <th>Status</th>
+                <th>Event</th>
+                <th>Addresse</th>
+                <th>Aktion</th>
+              </tr>
+            </thread>
+            <tbody>
+              <tr v-for="(log, index) in logninger" :key="index">
+                <td>{{ log.timestamp }}</td>
+                <td>{{ log.status }}</td>
+                <td>{{ log.event}}</td>
+                <td>{{ log.address }}</td>
+                <td>{{ log.coordinates }}</td>
+                <td><input type="checkbox" v-model="log.selected"></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
 
 
       </main>
