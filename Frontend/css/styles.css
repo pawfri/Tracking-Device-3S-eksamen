@@ -50,6 +50,17 @@ h1 {
   margin-left: 3rem;
 }
 
+.Section2 {
+  margin-top: 3rem;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.Section2 table {
+  width: 100%;
+  font-size: 20px;
+}
+
 main {
   margin-top: 5rem;
 }
