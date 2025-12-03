@@ -40,16 +40,14 @@ public class TrackingDeviceController : ControllerBase
 	}
 
 	// POST api/<TrackingDeviceController>
-	[HttpPost]
+	[HttpPost("trackingbutton")]
 	public Location? PostTrackButton([FromBody] Location value)
 	{
 		value = _latestLocation;
         return _repo.Add(value);
-
-		
 	}
 
-    [HttpPost]
+    [HttpPost("")]
     public Location? Post([FromBody] Location value)
     {
         value = _latestLocation;
