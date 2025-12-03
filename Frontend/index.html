@@ -11,28 +11,26 @@
   </head>
   <body>
     <div id="app">
-      <header>
 
+      <header>
       </header>
 
       <main>
         <section class="Section1">
-        <div>
-          <p> Device: {{ device }} </p>
-          <p> Status: {{ status }} </p>
-          <p> Sidst Set: {{ last_seen }} </p>
-          <p> Lokation: {{ location }} </p>
-        </div>
+          <div>
+            <p> Device: {{ deviceName }} </p>
+            <p> Status: {{ sortedLoggings[0] ? sortedLoggings[0].status : '' }} </p>
+            <p> Sidst Set: {{ sortedLoggings[0] ? sortedLoggings[0].timestamp : '' }} </p>
+            <p> Lokation: {{ sortedLoggings[0] ? sortedLoggings[0].address : '' }} </p>
+          </div>
 
-        <div class="findButtonDiv">
-          <button @click="GetAll" class="findButton">Track! </button>
-          <button @click="StopTracking" class="stopButton">Stop Tracking </button>
-          <button @click="StopIndicators" class="stopIndicatorsButton">Stop Indikators </button>
-        </div>
+          <div class="findButtonDiv">
+            <button @click="GetAll" class="findButton">Track! </button>
+            <button @click="StopTracking" class="stopButton">Stop Tracking </button>
+            <button @click="StopIndicators" class="stopIndicatorsButton">Stop Indikators </button>
+          </div>
 
-        <div class="placeholderMap">
-        </div>
-
+          <div class="placeholderMap"></div>
         </section>
 
         <section class="Section2">
@@ -59,9 +57,6 @@
             </tbody>
           </table>
         </section>
-
-
-
       </main>
       
     </div>

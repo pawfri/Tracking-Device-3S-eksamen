@@ -1,9 +1,8 @@
 const app = Vue.createApp({
     data() {
         return {
-            intro: 'Welcome to my Vue template',
-            loggings:[],
-            device: '',
+            loggings: [],
+            deviceName: '',
         }
     },
     methods: {
@@ -24,18 +23,11 @@ const app = Vue.createApp({
             .catch(error => {
                 console.error("Couldn't retrieve data", error);
             });
-
         },
     },
     computed: {
         sortedLoggings() {
-            return this.loggings.slice().sort((a, b) => {
-                return new Date(b.timestamp) - new Date(a.timestamp);
-            });
-        },
-        myComputed() {
-            return ''
-        },
-        
+            return this.loggings.slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        } 
     }
-})
+});
