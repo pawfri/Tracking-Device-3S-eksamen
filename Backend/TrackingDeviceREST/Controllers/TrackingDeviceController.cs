@@ -16,8 +16,6 @@ public class TrackingDeviceController : ControllerBase
 	private ITrackingDeviceRepo _repo;
 	public static Location? _latestLocation;
     public static DateTime _lastSavedTime = DateTime.MinValue;
-    //private List<Location> _locationBuffer = new List<Location>();
-    //private static DateTime _lastFlushTime = DateTime.UtcNow;
 
 
 	public TrackingDeviceController(ITrackingDeviceRepo repo)
