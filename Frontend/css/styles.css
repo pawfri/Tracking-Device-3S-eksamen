@@ -25,15 +25,25 @@ h1 {
 }
 
 .findButtonDiv {
-  margin-left: 45rem;
   display: flex;
   flex-direction: column;
+  flex: 0 0 250px;
   max-width: 250px;
+  margin-left: -15px;
+  margin-right: 2rem;
 }
 
 .Section1 {
   display: flex;
+  flex-wrap: wrap;
   margin-left: 50px;
+  margin-right: 50px;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.Section1 > div {
+  flex: 1 1 200px;
 }
 
 .Section1 p {
@@ -43,22 +53,26 @@ h1 {
 }
 
 .placeholderMap {
-  width: 25rem;
-  height: 20rem;
+  flex: 1 1 40rem;
+  min-width: 50%;
+  max-width: 100%;
+  height: 30rem;
   background-color: blue;
   margin-top: 0.5rem;
-  margin-left: 3rem;
 }
 
 .Section2 {
   margin-top: 3rem;
   margin-left: 50px;
   margin-right: 50px;
+  overflow-x: auto;
 }
 
 .Section2 table {
   width: 100%;
+  min-width: 600px;
   font-size: 20px;
+  border-collapse: collapse;
 }
 
 main {
