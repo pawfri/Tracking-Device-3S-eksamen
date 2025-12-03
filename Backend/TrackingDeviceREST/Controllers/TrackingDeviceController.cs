@@ -16,8 +16,6 @@ public class TrackingDeviceController : ControllerBase
 	private ITrackingDeviceRepo _repo;
 	public static Location? _latestLocation;
     public static DateTime _lastSavedTime = DateTime.MinValue;
-    //private List<Location> _locationBuffer = new List<Location>();
-    //private static DateTime _lastFlushTime = DateTime.UtcNow;
 
 
 	public TrackingDeviceController(ITrackingDeviceRepo repo)
@@ -59,23 +57,16 @@ public class TrackingDeviceController : ControllerBase
         // Gem den nyeste lokation i memory
         _latestLocation = value;
 
-        // Hvis det er første gang eller der er gået 10 minutter
-        if ((DateTime.UtcNow - _lastSavedTime).TotalMinutes >= 10)
+        // Hvis det er første gang eller der er gået 3 minutter
+        if ((DateTime.UtcNow - _lastSavedTime).TotalMinutes >= 3)
         {
             _lastSavedTime = DateTime.UtcNow;
             return Ok(_repo.Add(value));
         }
 
-        // Ellers gemmer vi ikke endnu
+        // ..ellers gemmes lokationen ikke i databasen endnu
         return Ok("Location updated, but not saved yet");
     }
-
-
-    //[HttpPost]
-    //public Location TrackButtonPressed(int value)
-    //{
-    //	return
-    //}
 
     //// PUT api/<TrackingDeviceController>/5
     //[HttpPut("{id}")]
