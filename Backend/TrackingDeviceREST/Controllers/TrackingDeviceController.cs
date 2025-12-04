@@ -68,6 +68,31 @@ public class TrackingDeviceController : ControllerBase
         return Ok("Location updated, but not saved yet");
     }
 
+    // API RELATERET METODER
+    [HttpGet("latest-with-address")]
+    public async Task<IActionResult> GetLatestWithAddress()
+    {
+        if (_latestLocation == null)
+            return BadRequest("No location available");
+
+        string apiKey = "YOUR_LOCATIONIQ_API_KEY";
+        string url = $"https://us1.locationiq.com/v1/reverse.php?key={apiKey}&lat={_latestLocation.Latitude}&lon={_latestLocation.Longitude}&format=json";
+
+        using var httpClient = new HttpClient();
+        var response = await httpClient.GetStringAsync(url);
+
+        var locationData = System.Text.Json.JsonSerializer.Deserialize<dynamic>(response);
+
+        return Ok(new
+        {
+            _latestLocation.Id,
+            _latestLocation.Latitude,
+            _latestLocation.Longitude,
+            _latestLocation.Date,
+            Address = locationData?["display_name"] //Tilføjet ? fordi den kan være null
+        });
+    }
+
     //// PUT api/<TrackingDeviceController>/5
     //[HttpPut("{id}")]
     //public void Put(int id, [FromBody] string value)

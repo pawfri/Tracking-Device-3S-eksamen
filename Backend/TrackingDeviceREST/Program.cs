@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using TrackingDeviceLib.Data;
+using TrackingDeviceLib.Models;
 using TrackingDeviceLib.Services.Interfaces;
 using TrackingDeviceLib.Services.Repositories;
 
@@ -13,6 +14,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient<GeocodingService>();
 builder.Services.AddScoped<ITrackingDeviceRepo, TrackingDeviceDBRepo>();
 builder.Services.AddDbContext<TrackingDeviceContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
