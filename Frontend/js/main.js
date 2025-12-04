@@ -1,3 +1,5 @@
+const baseUri = 'https://mmvpt.azurewebsites.net/api/TrackingDevice';
+
 const app = Vue.createApp({
     data() {
         return {

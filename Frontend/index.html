@@ -33,7 +33,7 @@
           </div>
 
           <div class="findButtonDiv">
-            <button @click="GetAll" class="findButton">Track! </button>
+            <button @click="getDataFromRaspberry" class="findButton">Track! </button>
             <button @click="StopTracking" class="stopButton">Stop Tracking </button>
             <button @click="StopIndicators" class="stopIndicatorsButton">Stop Indikators </button>
           </div>
@@ -69,6 +69,9 @@
       </main>
       
     </div>
+
+    <!-- Import Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- Import App -->
     <script src="./js/main.js"></script>
