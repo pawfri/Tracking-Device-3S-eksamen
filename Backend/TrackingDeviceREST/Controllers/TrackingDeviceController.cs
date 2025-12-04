@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TrackingDeviceLib.Dtos;
 using TrackingDeviceLib.Models;
 using TrackingDeviceLib.Services.Interfaces;
 using TrackingDeviceLib.Services.Repositories;
@@ -75,22 +76,19 @@ public class TrackingDeviceController : ControllerBase
         if (_latestLocation == null)
             return BadRequest("No location available");
 
-        string apiKey = "YOUR_LOCATIONIQ_API_KEY";
-        string url = $"https://us1.locationiq.com/v1/reverse.php?key={apiKey}&lat={_latestLocation.Latitude}&lon={_latestLocation.Longitude}&format=json";
+        // Use your GeocodingService instead of calling HttpClient manually
+        var geocodingService = new GeocodingService(new HttpClient(), new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
+        string? address = await geocodingService.ReverseGeocode(_latestLocation.Latitude, _latestLocation.Longitude);
 
-        using var httpClient = new HttpClient();
-        var response = await httpClient.GetStringAsync(url);
-
-        var locationData = System.Text.Json.JsonSerializer.Deserialize<dynamic>(response);
-
-        return Ok(new
+        var dto = new LocationDto
         {
-            _latestLocation.Id,
-            _latestLocation.Latitude,
-            _latestLocation.Longitude,
-            _latestLocation.Date,
-            Address = locationData?["display_name"] //Tilføjet ? fordi den kan være null
-        });
+            Latitude = _latestLocation.Latitude,
+            Longitude = _latestLocation.Longitude,
+            Date = _latestLocation.Date,
+            Address = address
+        };
+
+        return Ok(dto);
     }
 
     //// PUT api/<TrackingDeviceController>/5
