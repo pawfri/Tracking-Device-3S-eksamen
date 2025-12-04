@@ -3,8 +3,14 @@ const app = Vue.createApp({
         return {
             loggings: [],
             deviceName: '',
+            map: null,
         }
     },
+
+     mounted() {
+        this.initMap();
+    },
+
     methods: {
         getDataFromRaspberry(){
             axios.get(baseUri)
@@ -24,6 +30,22 @@ const app = Vue.createApp({
                 console.error("Couldn't retrieve data", error);
             });
         },
+        initMap() {
+                    if (typeof L === 'undefined') {
+                        console.error('Leaflet (L) is not loaded. Include Leaflet JS/CSS before this script.');
+                        return;
+                    }
+                    console.log("Initialiserer kortet");
+                    this.map = L.map('map').setView([51.505, -0.09], 18);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(this.map);
+                    console.log("Kort initialiseret");
+                    
+                }
+
+      
     },
     computed: {
         sortedLoggings() {
@@ -31,3 +53,4 @@ const app = Vue.createApp({
         } 
     }
 });
+
