@@ -30,7 +30,7 @@ namespace TestREST
             var date = DateTime.Parse(timestampString, null, System.Globalization.DateTimeStyles.RoundtripKind);
             
             // Act
-            var model = new Location(longitude, latitude, date);
+            var model = new Location(longitude, latitude, date, "Automatisk");
             _repo.Add(model);
 
             // Assert
@@ -56,8 +56,8 @@ namespace TestREST
 			var repo = new TrackingDeviceRepo();
 			var date = DateTime.Parse("2024-05-01T12:00:00Z", null, DateTimeStyles.RoundtripKind);
 
-			var model1 = new Location(12.3456, 65.4321, date);
-			var model2 = new Location(12.3456, 65.4321, date);
+			var model1 = new Location(12.3456, 65.4321, date, "Automatisk");
+			var model2 = new Location(12.3456, 65.4321, date, "Automatisk");
 
 			// Act
 			repo.Add(model1);

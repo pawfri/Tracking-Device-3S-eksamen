@@ -15,9 +15,9 @@ public class TrackingDeviceRepo : ITrackingDeviceRepo
 
     public TrackingDeviceRepo()
     {
-        _locations.Add(new Location(1, 10.0000, 20.0000, DateTime.Parse("2025-01-12T11:15:00")));
-        _locations.Add(new Location(2 ,10.0000, 20.0000, DateTime.Parse("2025-01-12T12:16:00")));
-        _locations.Add(new Location(3, 10.0000, 20.0000, DateTime.Parse("2025-01-12T13:17:00")));
+        _locations.Add(new Location(1, 10.0000, 20.0000, DateTime.Parse("2025-01-12T11:15:00"), "Automatisk"));
+        _locations.Add(new Location(2 ,10.0000, 20.0000, DateTime.Parse("2025-01-12T12:16:00"), "Automatisk"));
+        _locations.Add(new Location(3, 10.0000, 20.0000, DateTime.Parse("2025-01-12T13:17:00"), "Automatisk"));
     }
 
     public List<Location> GetAll()

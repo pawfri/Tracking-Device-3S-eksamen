@@ -10,7 +10,8 @@ public class Location
     public int Id { get; set; }
 	public double Longitude { get; set; }
 	public double Latitude { get; set; }
-    
+    public string Source { get; set; }
+
     [JsonPropertyName("timestamp")]
     public DateTime Date
     {
@@ -25,18 +26,20 @@ public class Location
 
     public Location() { }
 
-    public Location(double longitude, double latitude, DateTime date)
+    public Location(double longitude, double latitude, DateTime date, string source)
 	{
 		Longitude = longitude;
 		Latitude = latitude;
 		Date = date;
-	}
+        Source = source;
+    }
 
-    public Location(int id, double longitude, double latitude, DateTime date)
+    public Location(int id, double longitude, double latitude, DateTime date, string source)
     {
         Id = id;
         Longitude = longitude;
         Latitude = latitude;
         Date = date;
+        Source = source;
     }
 }

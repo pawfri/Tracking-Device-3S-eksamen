@@ -46,6 +46,7 @@ public class TrackingDeviceController : ControllerBase
         if (_latestLocation == null)
             return BadRequest("No location received yet");
 
+        _latestLocation.Source = "Manuelt";
         return Ok(_repo.Add(_latestLocation));
     }
 
@@ -63,6 +64,7 @@ public class TrackingDeviceController : ControllerBase
         {
             _lastSavedTime = DateTime.UtcNow;
             value.Date = DateTime.UtcNow;
+            value.Source = "Automatisk";
             return Ok(_repo.Add(value));
         }
 
