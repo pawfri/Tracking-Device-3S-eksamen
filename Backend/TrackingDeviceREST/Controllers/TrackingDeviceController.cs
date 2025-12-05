@@ -25,46 +25,46 @@ public class TrackingDeviceController : ControllerBase
 	}
 
 
-    // GET: api/<TrackingDeviceController>
-    //[HttpGet]
-    //public IEnumerable<Location> Get()
-    //{
-    //	return _repo.GetAll();
-    //}
-
-[HttpGet]
-public async Task<IActionResult> Get()
-{
-    var locations = _repo.GetAll(); // database rows
-    var geocodingService = new GeocodingService(new HttpClient(),
-        new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
-
-    var result = new List<LocationDto>();
-
-    foreach (var loc in locations)
+    //GET: api/<TrackingDeviceController>
+    [HttpGet]
+    public IEnumerable<Location> Get()
     {
-        string? address = null;
-        try
-        {
-            address = await geocodingService.ReverseGeocode(loc.Latitude, loc.Longitude);
-        }
-        catch
-        {
-            // optionally log failure
-            address = "Unknown address";
-        }
-
-        result.Add(new LocationDto
-        {
-            Latitude = loc.Latitude,
-            Longitude = loc.Longitude,
-            Date = loc.Date,
-            Address = address
-        });
+    	return _repo.GetAll();
     }
 
-    return Ok(result);  // <--- must wrap in Ok()
-}
+//[HttpGet]
+//public async Task<IActionResult> Get()
+//{
+//    var locations = _repo.GetAll(); // database rows
+//    var geocodingService = new GeocodingService(new HttpClient(),
+//        new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
+
+//    var result = new List<LocationDto>();
+
+//    foreach (var loc in locations)
+//    {
+//        string? address = null;
+//        try
+//        {
+//            address = await geocodingService.ReverseGeocode(loc.Latitude, loc.Longitude);
+//        }
+//        catch
+//        {
+//             optionally log failure
+//            address = "Unknown address";
+//        }
+
+//        result.Add(new LocationDto
+//        {
+//            Latitude = loc.Latitude,
+//            Longitude = loc.Longitude,
+//            Date = loc.Date,
+//            Address = address
+//        });
+//    }
+
+//    return Ok(result);  // <--- must wrap in Ok()
+//}
 
     // GET api/<TrackingDeviceController>/5
     [HttpGet("{id}")]

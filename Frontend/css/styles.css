@@ -105,16 +105,19 @@ main {
 
   margin-left: 2rem;
   margin-right: 5rem;
+   border-radius: 5px;
 }
 .LogudafKonto{
   margin-left: 140rem;
   margin-right: 2rem;
+  margin-top: -3rem;
+  border-radius: 5px;
 }
 
 .UserInfo{
   margin-left: 115rem;
   margin-right: 2rem;
-  margin-top: -1.8rem;
+  margin-top: -3rem;
 
 }
 
