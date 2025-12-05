@@ -22,7 +22,7 @@ const app = Vue.createApp({
                     timestamp: item.timestamp,
                     // status: item.status,
                     // event: item.event,
-                    address: item.address,
+                    // address: item.address,
                     latitude: item.latitude,
                     longitude: item.longitude,
                     // coordinates: item.coordinates,
@@ -52,7 +52,7 @@ const app = Vue.createApp({
 
       
     },
-    computed: {
+        computed: {
         sortedLoggings() {
             return this.loggings.slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
         } 

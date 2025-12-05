@@ -87,6 +87,9 @@ main {
   margin-top: 0.5rem;
 }
 
-
+.greenText {
+  color: rgb(23, 162, 23);
+  font-weight: bold;
+}
 
 /* { height: 180px; } */

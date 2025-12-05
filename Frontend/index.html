@@ -21,22 +21,29 @@
     <div id="app">
 
       <header>
+          <div class="AccountSettings">
+            <button @click="ManageEnheden" class="ManageEnheden">Manage Konto & Enheder </button>
+            <button @click="ÆndreEnheder" class="ÆndreEnheder">Ændre Enhed </button>
+            <button @click="LogudafKonto" class="LogudafKonto">Log ud </button>
+          </div>
       </header>
 
       <main>
         <section class="Section1">
           <div>
             <p> Device: {{ deviceName }} </p>
-            <p> Status: {{ sortedLoggings[0] ? sortedLoggings[0].status : '' }} </p>
+            <p> Status: <span class="greenText">Online</span></p>
             <p> Tidspunkt: {{ sortedLoggings[0] ? sortedLoggings[0].timestamp : '' }} </p>
             <p> Adresse: {{ sortedLoggings[0] ? sortedLoggings[0].address : '' }} </p>
           </div>
 
           <div class="findButtonDiv">
             <button @click="getDataFromRaspberry" class="findButton">Track! </button>
-            <button @click="StopTracking" class="stopButton">Stop Tracking </button>
-            <button @click="StopIndicators" class="stopIndicatorsButton">Stop Indikators </button>
+            <button @click="stopTracking" class="stopButton">Stop Tracking </button>
+            <button @click="stopIndicators" class="stopIndicatorsButton">Stop Indikators </button>
           </div>
+
+        
 
           <!-- <div class="placeholderMap"></div> -->
            <div id="map">{{  }}</div>
@@ -57,7 +64,7 @@
             <tbody>
               <tr v-for="(log, index) in sortedLoggings" :key="index">
                 <td>{{ log.timestamp }}</td>
-                <td> Online </td>
+                <td class="greenText"> Online </td>
                 <td>{{ log.event}}</td>
                 <td>{{ log.address }}</td>
                 <td>Lat: {{ log.latitude }}, Lon: {{log.longitude}}</td>
