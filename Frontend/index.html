@@ -20,15 +20,17 @@
   <body>
     <div id="app">
 
-      <header>
+      <header class="headerSection">
           <div class="AccountSettings">
-            <button @click="ManageEnheden" class="ManageEnheden">Manage Konto & Enheder </button>
-            <button @click="ÆndreEnheder" class="ÆndreEnheder">Ændre Enhed </button>
-            <button @click="LogudafKonto" class="LogudafKonto">Log ud </button>
-          </div>
+            <div class="headerDiv">
+              <button @click="ManageEnheden" class="ManageEnheden">Manage Konto & Enheder </button>
+              <button @click="ÆndreEnheder" class="ÆndreEnheder">Ændre Enhed </button>
+            </div>
 
-          <div class="UserInfo">
-            <span class="User">User: Tanya's Taske</span>
+            <div class="headerDiv">
+              <span class="User">User: Tanya</span>
+              <button @click="LogudafKonto" class="LogudafKonto">Log ud </button>
+            </div>
           </div>
       </header>
 

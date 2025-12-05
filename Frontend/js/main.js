@@ -4,7 +4,7 @@ const app = Vue.createApp({
     data() {
         return {
             loggings: [],
-            deviceName: '',
+            deviceName: "Tanyas Taske",
             map: null,
         }
     },
