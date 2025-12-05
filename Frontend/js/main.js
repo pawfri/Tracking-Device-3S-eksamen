@@ -27,14 +27,14 @@ const app = Vue.createApp({
             });
 
             const addr = response.data.address;
-            if (!addr) return response.data.display_name || 'Unknown address';
+            if (!addr) return response.data.display_name || 'Ukendt adresse';
 
             // Format som ønsket: "Maglegårdsvej 2, 4000 Roskilde, Denmark"
             return `${addr.road ?? ''} ${addr.house_number ?? ''}, ${addr.postcode ?? ''} ${addr.city ?? ''}, ${addr.country ?? ''}`;
 
         } catch (error) {
             console.error('Failed to fetch address', error);
-            return 'Unknown address';
+            return 'Ukendt adresse';
         }
     },
             formatTimestamp(ts) {
@@ -104,14 +104,17 @@ const app = Vue.createApp({
                 return;
             }
             console.log("Initialiserer kortet");
-            this.map = L.map('map').setView([51.505, -0.09], 18);
+            this.map = L.map('map').setView([55.6307, 12.078], 17);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '&copy; OpenStreetMap contributors'
             }).addTo(this.map);
             console.log("Kort initialiseret");
                     
-        }
+        },
+            PostTrackButton() {
+            axios.PostTrackButton(baseUri + '/trackingbutton')
+    },
 
       
     },

@@ -46,7 +46,7 @@ h1 {
 }
 
 .Section1 p {
-  font-size: 30px;
+  font-size: 25px;
   line-height: 1.4;
   font-weight: bold;
 }
@@ -61,7 +61,7 @@ h1 {
 }
 
 .Section2 {
-  margin-top: 3rem;
+  margin-top: 2rem;
   overflow-x: auto;
 }
 
@@ -81,7 +81,7 @@ body {
 }
 
 #map { 
-  flex: 1 1 40rem;
+  flex: 1 3 30rem;
   min-width: 50%;
   max-width: 100%;
   height: 30rem;

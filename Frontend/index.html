@@ -40,11 +40,12 @@
             <p> Device: {{ deviceName }} </p>
             <p> Status: <span class="greenText">Online</span></p>
             <p> Tidspunkt: {{ sortedLoggings[0] ? sortedLoggings[0].timestamp : '' }} </p>
+            <!-- <p> Adresse: <span v-html="sortedLoggings[0] ? sortedLoggings[0].address : ''"></span></p> -->
             <p> Adresse: {{ sortedLoggings[0] ? sortedLoggings[0].address : '' }} </p>
           </div>
 
           <div class="findButtonDiv">
-            <button @click="getDataFromRaspberry" class="findButton">Track! </button>
+            <button @click="PostTrackButton" class="findButton">Track! </button>
             <button @click="stopTracking" class="stopButton">Stop Tracking </button>
             <button @click="stopIndicators" class="stopIndicatorsButton">Stop Indikators </button>
           </div>
