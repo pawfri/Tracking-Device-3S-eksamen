@@ -11,6 +11,7 @@ const app = Vue.createApp({
 
      mounted() {
         this.initMap();
+        this.getDataFromRaspberry();
     },
 
     methods: {
@@ -19,10 +20,12 @@ const app = Vue.createApp({
             .then(response => {
                 this.loggings = response.data.map(item => ({
                     timestamp: item.timestamp,
-                    status: item.status,
-                    event: item.event,
+                    // status: item.status,
+                    // event: item.event,
                     address: item.address,
-                    coordinates: item.coordinates,
+                    latitude: item.latitude,
+                    longitude: item.longitude,
+                    // coordinates: item.coordinates,
                     selected: false
                 }) )
                 console.log(this.loggings)

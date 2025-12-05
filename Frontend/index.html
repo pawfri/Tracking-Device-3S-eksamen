@@ -57,10 +57,10 @@
             <tbody>
               <tr v-for="(log, index) in sortedLoggings" :key="index">
                 <td>{{ log.timestamp }}</td>
-                <td>{{ log.status }}</td>
+                <td> Online </td>
                 <td>{{ log.event}}</td>
                 <td>{{ log.address }}</td>
-                <td>{{ log.coordinates }}</td>
+                <td>Lat: {{ log.latitude }}, Lon: {{log.longitude}}</td>
                 <td><input type="checkbox" v-model="log.selected"></td>
               </tr>
             </tbody>
