@@ -6,6 +6,7 @@ const app = Vue.createApp({
             loggings: [],
             deviceName: "Tanyas Taske",
             map: null,
+            latestWithAddress: null,
         }
     },
 
@@ -36,7 +37,7 @@ const app = Vue.createApp({
             console.error('Failed to fetch address', error);
             return 'Ukendt adresse';
         }
-    },
+        },
             formatTimestamp(ts) {
             const d = new Date(ts);
 
@@ -112,9 +113,18 @@ const app = Vue.createApp({
             console.log("Kort initialiseret");
                     
         },
-            PostTrackButton() {
-            axios.PostTrackButton(baseUri + '/trackingbutton')
-    },
+        async PostTrackButton() {
+        try {
+            const response = await axios.post(baseUri + '/trackingbutton');
+            console.log("Track! saved:", response.data);
+
+            // Reload data so the new DB entry appears immediately
+            await this.getDataFromRaspberry();
+
+        } catch (error) {
+            console.error("Track button failed:", error);
+        }
+        },
 
       
     },
