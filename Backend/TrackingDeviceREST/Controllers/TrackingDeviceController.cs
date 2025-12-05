@@ -25,15 +25,41 @@ public class TrackingDeviceController : ControllerBase
 	}
 
 
-	// GET: api/<TrackingDeviceController>
-	[HttpGet]
-	public IEnumerable<Location> Get()
-	{
-		return _repo.GetAll();
-	}
+    // GET: api/<TrackingDeviceController>
+    //[HttpGet]
+    //public IEnumerable<Location> Get()
+    //{
+    //	return _repo.GetAll();
+    //}
 
-	// GET api/<TrackingDeviceController>/5
-	[HttpGet("{id}")]
+    [HttpGet]
+    public async Task<IEnumerable<LocationDto>> Get()
+    {
+        var locations = _repo.GetAll();
+
+        var geocodingService = new GeocodingService(new HttpClient(),
+            new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
+
+        var result = new List<LocationDto>();
+
+        foreach (var loc in locations)
+        {
+            string? address = await geocodingService.ReverseGeocode(loc.Latitude, loc.Longitude);
+
+            result.Add(new LocationDto
+            {
+                Latitude = loc.Latitude,
+                Longitude = loc.Longitude,
+                Date = loc.Date,
+                Address = address
+            });
+        }
+
+        return result;
+    }
+
+    // GET api/<TrackingDeviceController>/5
+    [HttpGet("{id}")]
 	public Location? GetById(int id)
 	{
 		return _repo.GetById(id);

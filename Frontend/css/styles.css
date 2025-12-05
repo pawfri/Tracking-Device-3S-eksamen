@@ -92,4 +92,24 @@ main {
   font-weight: bold;
 }
 
+.ManageEnheden
+{
+  margin-left: 5rem;
+  margin-right: 2rem;
+
+}
+
+.LogudafKonto{
+  margin-left: 120rem;
+  margin-right: 5rem;
+}
+
+.UserInfo{
+  margin-left: 115rem;
+  margin-right: 2rem;
+  margin-top: -1.8rem;
+
+}
+
+
 /* { height: 180px; } */
