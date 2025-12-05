@@ -92,34 +92,23 @@ main {
   font-weight: bold;
 }
 
-.ManageEnheden
-{
-  margin-left: 5rem;
-  margin-right: 2rem;
-  border: 2px solid;
-  border-radius: 5px;
-
+.AccountSettings {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  flex: 0 0 auto;
 }
 
-.ÆndreEnheder{
-
-  margin-left: 2rem;
-  margin-right: 5rem;
-   border-radius: 5px;
-}
-.LogudafKonto{
-  margin-left: 140rem;
-  margin-right: 2rem;
-  margin-top: -3rem;
-  border-radius: 5px;
+.UserInfo {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 2.5rem;
 }
 
-.UserInfo{
-  margin-left: 115rem;
-  margin-right: 2rem;
-  margin-top: -3rem;
-
+header {
+  overflow-x: auto;
 }
-
-
-/* { height: 180px; } */

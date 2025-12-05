@@ -16,7 +16,28 @@ const app = Vue.createApp({
     },
 
     methods: {
-        formatTimestamp(ts) {
+    async fetchAddress(lat, lon) {
+        try {
+            const response = await axios.get('https://nominatim.openstreetmap.org/reverse', {
+                params: {
+                    format: 'json',
+                    lat: lat,
+                    lon: lon
+                }
+            });
+
+            const addr = response.data.address;
+            if (!addr) return response.data.display_name || 'Unknown address';
+
+            // Format som ønsket: "Maglegårdsvej 2, 4000 Roskilde, Denmark"
+            return `${addr.road ?? ''} ${addr.house_number ?? ''}, ${addr.postcode ?? ''} ${addr.city ?? ''}, ${addr.country ?? ''}`;
+
+        } catch (error) {
+            console.error('Failed to fetch address', error);
+            return 'Unknown address';
+        }
+    },
+            formatTimestamp(ts) {
             const d = new Date(ts);
 
             const day = String(d.getDate()).padStart(2, '0');
@@ -29,26 +50,30 @@ const app = Vue.createApp({
 
             return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
         },
-        getDataFromRaspberry(){
-            axios.get(baseUri)
-            .then(response => {
+        async getDataFromRaspberry() {
+            try {
+                const response = await axios.get(baseUri);
+
+                // Initialize logs without addresses first
                 this.loggings = response.data.map(item => ({
                     timestamp: this.formatTimestamp(item.timestamp),
-                    // status: item.status,
-                    // event: item.event,
-                    address: this.getLatestWithAddress(item.address),
                     latitude: item.latitude,
                     longitude: item.longitude,
-                    // coordinates: item.coordinates,
+                    address: 'Henter adresse...',  // placeholder
                     selected: false
-                }) )
-                console.log(this.loggings)
-                console.log(response.status);
-            })
-            .catch(error => {
+                }));
+
+                // Fetch addresses in parallel
+                await Promise.all(this.loggings.map(async log => {
+                    log.address = await this.fetchAddress(log.latitude, log.longitude);
+                }));
+
+                console.log(this.loggings);
+
+            } catch (error) {
                 console.error("Couldn't retrieve data", error);
-                this.errorMessage = 'kunne ikke hente blabla';
-            });
+                this.errorMessage = 'Kunne ikke hente blabla';
+            }
         },
         async getLatestWithAddress() {
             try {
