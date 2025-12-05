@@ -7,6 +7,7 @@ const app = Vue.createApp({
             deviceName: "Tanyas Taske",
             map: null,
             latestWithAddress: null,
+            latestMarker: null,
         }
     },
 
@@ -60,7 +61,8 @@ const app = Vue.createApp({
                     timestamp: this.formatTimestamp(item.timestamp),
                     latitude: item.latitude,
                     longitude: item.longitude,
-                    address: 'Henter adresse...',  // placeholder
+                    address: 'Henter adresse...',
+                    source: item.source ?? 'Ukendt',
                     selected: false
                 }));
 
@@ -78,52 +80,75 @@ const app = Vue.createApp({
         },
         async getLatestWithAddress() {
             try {
-            const response = await axios.get(`${baseUri}/latest-with-address`);
-            const data = response?.data;
-        
-            // Håndter både camelCase og PascalCase (uden if ved
-            // brug af ?? og optional chaining)
-            this.latestWithAddress = {
-            latitude: data?.latitude ?? data?.Latitude,
-            longitude: data?.longitude ?? data?.Longitude,
-            date: data?.date ?? data?.Date,
-            address: data?.address ?? data?.Address
-            };
-            console.log('Latest with address:',
-            this.latestWithAddress);
+                const response = await axios.get(`${baseUri}/latest-with-address`);
+                const data = response?.data;
+
+                this.latestWithAddress = {
+                    latitude: data?.latitude ?? data?.Latitude,
+                    longitude: data?.longitude ?? data?.Longitude,
+                    date: data?.date ?? data?.Date,
+                    address: data?.address ?? data?.Address
+                };
+
+                console.log("Latest with address from API:", this.latestWithAddress); // <-- important
+
+                this.updateMapToLatest(); // move the map marker here
+
             } catch (error) {
-            console.error("Couldn't retrieve latest-with-address",
-            error);
-            this.errorMessage = 'Kunne ikke hente seneste lokation med adresse';
+                console.error("Couldn't retrieve latest-with-address", error);
+                this.errorMessage = 'Kunne ikke hente seneste lokation med adresse';
             }
         },
-
-        
         initMap() {
             if (typeof L === 'undefined') {
                 console.error('Leaflet (L) is not loaded. Include Leaflet JS/CSS before this script.');
                 return;
             }
             console.log("Initialiserer kortet");
-            this.map = L.map('map').setView([55.6307, 12.078], 17);
+
+            const lat = this.latestWithAddress?.latitude ?? 0; // fallback
+            const lon = this.latestWithAddress?.longitude ?? 0; // fallback
+
+            this.map = L.map('map').setView([lat, lon], 17);
+
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '&copy; OpenStreetMap contributors'
             }).addTo(this.map);
+
             console.log("Kort initialiseret");
-                    
+        },
+        updateMapToLatest() {
+            const lat = this.latestWithAddress?.latitude;
+            const lon = this.latestWithAddress?.longitude;
+
+            if (!this.map || lat == null || lon == null || lat === 0 || lon === 0) {
+                console.warn("Cannot update map: invalid coordinates", lat, lon);
+                return;
+            }
+
+            if (this.latestMarker) {
+                this.map.removeLayer(this.latestMarker);
+            }
+
+            this.latestMarker = L.marker([lat, lon])
+                .addTo(this.map)
+                .bindPopup(this.latestWithAddress.address ?? "Ukendt adresse")
+                .openPopup();
+
+            this.map.setView([lat, lon], 17);
         },
         async PostTrackButton() {
-        try {
-            const response = await axios.post(baseUri + '/trackingbutton');
-            console.log("Track! saved:", response.data);
+            try {
+                const response = await axios.post(baseUri + '/trackingbutton');
+                console.log("Track! saved:", response.data);
 
-            // Reload data so the new DB entry appears immediately
-            await this.getDataFromRaspberry();
-
-        } catch (error) {
-            console.error("Track button failed:", error);
-        }
+                // Reload data & update map
+                await this.getDataFromRaspberry();
+                await this.getLatestWithAddress();  // <- ensure map moves to new location
+            } catch (error) {
+                console.error("Track button failed:", error);
+            }
         },
 
       

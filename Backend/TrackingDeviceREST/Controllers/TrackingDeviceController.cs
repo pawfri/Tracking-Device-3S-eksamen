@@ -76,18 +76,18 @@ public class TrackingDeviceController : ControllerBase
     [HttpGet("latest-with-address")]
     public async Task<IActionResult> GetLatestWithAddress()
     {
-        if (_latestLocation == null)
+        var latest = _repo.GetAll().OrderByDescending(l => l.Date).FirstOrDefault();
+        if (latest == null)
             return BadRequest("No location available");
 
-        // Use your GeocodingService instead of calling HttpClient manually
         var geocodingService = new GeocodingService(new HttpClient(), new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
-        string? address = await geocodingService.ReverseGeocode(_latestLocation.Latitude, _latestLocation.Longitude);
+        string? address = await geocodingService.ReverseGeocode(latest.Latitude, latest.Longitude);
 
         var dto = new LocationDto
         {
-            Latitude = _latestLocation.Latitude,
-            Longitude = _latestLocation.Longitude,
-            Date = _latestLocation.Date,
+            Latitude = latest.Latitude,
+            Longitude = latest.Longitude,
+            Date = latest.Date,
             Address = address
         };
 
