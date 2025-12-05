@@ -32,31 +32,39 @@ public class TrackingDeviceController : ControllerBase
     //	return _repo.GetAll();
     //}
 
-    [HttpGet]
-    public async Task<IEnumerable<LocationDto>> Get()
+[HttpGet]
+public async Task<IActionResult> Get()
+{
+    var locations = _repo.GetAll(); // database rows
+    var geocodingService = new GeocodingService(new HttpClient(),
+        new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
+
+    var result = new List<LocationDto>();
+
+    foreach (var loc in locations)
     {
-        var locations = _repo.GetAll();
-
-        var geocodingService = new GeocodingService(new HttpClient(),
-            new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
-
-        var result = new List<LocationDto>();
-
-        foreach (var loc in locations)
+        string? address = null;
+        try
         {
-            string? address = await geocodingService.ReverseGeocode(loc.Latitude, loc.Longitude);
-
-            result.Add(new LocationDto
-            {
-                Latitude = loc.Latitude,
-                Longitude = loc.Longitude,
-                Date = loc.Date,
-                Address = address
-            });
+            address = await geocodingService.ReverseGeocode(loc.Latitude, loc.Longitude);
+        }
+        catch
+        {
+            // optionally log failure
+            address = "Unknown address";
         }
 
-        return result;
+        result.Add(new LocationDto
+        {
+            Latitude = loc.Latitude,
+            Longitude = loc.Longitude,
+            Date = loc.Date,
+            Address = address
+        });
     }
+
+    return Ok(result);  // <--- must wrap in Ok()
+}
 
     // GET api/<TrackingDeviceController>/5
     [HttpGet("{id}")]

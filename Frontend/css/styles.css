@@ -96,12 +96,19 @@ main {
 {
   margin-left: 5rem;
   margin-right: 2rem;
+  border: 2px solid;
+  border-radius: 5px;
 
 }
 
-.LogudafKonto{
-  margin-left: 120rem;
+.ÆndreEnheder{
+
+  margin-left: 2rem;
   margin-right: 5rem;
+}
+.LogudafKonto{
+  margin-left: 140rem;
+  margin-right: 2rem;
 }
 
 .UserInfo{
