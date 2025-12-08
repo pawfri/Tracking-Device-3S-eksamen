@@ -94,10 +94,10 @@
           <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
               <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <button class="page-link" @click="firstPage">First</button>
+                <button class="page-link" @click="firstPage">Første</button>
               </li>
               <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                <button class="page-link" @click="prevPage">Previous</button>
+                <button class="page-link" @click="prevPage">Forrige</button>
               </li>
 
               <!-- Show visible page numbers -->
@@ -106,10 +106,10 @@
               </li>
 
               <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                <button class="page-link" @click="nextPage">Next</button>
+                <button class="page-link" @click="nextPage">Næste</button>
               </li>
               <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                <button class="page-link" @click="lastPage">Last</button>
+                <button class="page-link" @click="lastPage">Sidste</button>
               </li>
             </ul>
           </nav>
