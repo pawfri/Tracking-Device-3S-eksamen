@@ -7,6 +7,8 @@ const app = Vue.createApp({
             deviceName: "Tanyas Taske",
             map: null,
             latestWithAddress: null,
+            currentPage: 1,
+            pageSize: 10,
         }
     },
 
@@ -109,11 +111,54 @@ const app = Vue.createApp({
             }
         },
 
+        // Methods related to pages in the table of location entries
+        goToPage(page) {
+            if (page >= 1 && page <= this.totalPages) {
+                this.currentPage = page;
+            }
+        },
+        nextPage() {
+            this.goToPage(this.currentPage + 1);
+        },
+        prevPage() {
+            this.goToPage(this.currentPage - 1);
+        },
+        firstPage() {
+            this.goToPage(1);
+        },
+        lastPage() {
+            this.goToPage(this.totalPages);
+        }
+
     },
     computed: {
-        // This method could be useful later in our implementation for sorting logic by user
-        // sortedLoggings() {
-        //     return this.loggings.slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-        // } 
+    // Slice the array when reaching the set pageSize defined as a dataobject
+    pagedLoggings() {
+        const start = (this.currentPage - 1) * this.pageSize;
+        const end = start + this.pageSize;
+        return this.loggings.slice(start, end);
+    },
+
+    // Total number of pages in the table
+    totalPages() {
+        return Math.ceil(this.loggings.length / this.pageSize);
+    },
+
+    // Which page numbers to show in the pagination control
+    visiblePageNumbers() {
+        const pages = [];
+        const maxButtons = 5; // Set how many page numbers around current page
+        let start = Math.max(1, this.currentPage - 2);
+        let end = Math.min(this.totalPages, start + maxButtons - 1);
+
+        // Adjust start if near the end
+        start = Math.max(1, end - maxButtons + 1);
+
+        for (let i = start; i <= end; i++) {
+            pages.push(i);
+        }
+
+        return pages;
+        }
     }
 });
