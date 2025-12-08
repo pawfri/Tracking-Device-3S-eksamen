@@ -23,14 +23,14 @@ namespace TestREST
         /// <param name="latitude">lat-paramter værdi</param>
         /// <param name="timestampString">Tidspunkt</param>
         [TestMethod]
-        [DataRow(1, 12.3456, 65.4321, "2024-05-01T12:00:00Z")]
-        public void CreateObject(int id, double longitude, double latitude, string timestampString)
+        [DataRow(1, 12.3456, 65.4321, "2024-05-01T12:00:00Z", "Maglegårdsvej 2, 4000 Roskilde, Denmark")]
+        public void CreateObject(int id, double longitude, double latitude, string timestampString, string address)
         {
             // Arrange
             var date = DateTime.Parse(timestampString, null, System.Globalization.DateTimeStyles.RoundtripKind);
             
             // Act
-            var model = new Location(longitude, latitude, date, "Automatisk");
+            var model = new Location(longitude, latitude, date, "Automatisk", "Maglegårdsvej 2, 4000 Roskilde, Denmark");
             _repo.Add(model);
 
             // Assert
@@ -38,6 +38,7 @@ namespace TestREST
             Assert.AreEqual(longitude, model.Longitude);
             Assert.AreEqual(latitude, model.Latitude);
             Assert.AreEqual(date, model.Date);
+            Assert.AreEqual(address, model.Address);
         }
 
         /// <summary>
@@ -48,16 +49,14 @@ namespace TestREST
         /// <param name="timestampString">Tidspunkt</param>
         ///
         [TestMethod]
-  //      [DataRow(0, 12.3456, 65.4321, "2024-05-01T12:00:00Z")]
-		//[DataRow(1, 12.3456, 65.4321, "2024-05-01T12:00:00Z")]
 		public void UniqueId()
         {
 			// Arrange
 			var repo = new TrackingDeviceRepo();
 			var date = DateTime.Parse("2024-05-01T12:00:00Z", null, DateTimeStyles.RoundtripKind);
 
-			var model1 = new Location(12.3456, 65.4321, date, "Automatisk");
-			var model2 = new Location(12.3456, 65.4321, date, "Automatisk");
+			var model1 = new Location(12.3456, 65.4321, date, "Automatisk", "Maglegårdsvej 2, 4000 Roskilde, Denmark");
+			var model2 = new Location(12.3456, 65.4321, date, "Automatisk", "Maglegårdsvej 2, 4000 Roskilde, Denmark");
 
 			// Act
 			repo.Add(model1);

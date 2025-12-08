@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrackingDeviceLib.Dtos;
 using TrackingDeviceLib.Models;
+using TrackingDeviceLib.Services;
 using TrackingDeviceLib.Services.Interfaces;
 using TrackingDeviceLib.Services.Repositories;
 
@@ -41,20 +42,39 @@ public class TrackingDeviceController : ControllerBase
 
     // POST api/<TrackingDeviceController>
     [HttpPost("trackingbutton")]
-    public IActionResult PostTrackButton()
+    public async Task<IActionResult> PostTrackButton()
     {
         if (_latestLocation == null)
             return BadRequest("No location received yet");
+
+        // Geocoding
+        var geocoding = new Geocoding(
+        new HttpClient(),
+        "mmvpt-tracker/1.0 (clib@hotmail.com)"
+        );
+
+        _latestLocation.Address = await geocoding.ReverseGeocode(
+            _latestLocation.Latitude,
+            _latestLocation.Longitude
+        );
 
         _latestLocation.Source = "Manuelt";
         return Ok(_repo.Add(_latestLocation));
     }
 
     [HttpPost("")]
-    public IActionResult Post([FromBody] Location value)
+    public async Task<IActionResult> Post([FromBody] Location value)
     {
         if (value == null)
             return BadRequest("Location is empty");
+
+        // Geocode address
+        var geocoding = new Geocoding(
+            new HttpClient(),
+            "mmvpt-tracker/1.0 (clib@hotmail.com)"
+        );
+
+        value.Address = await geocoding.ReverseGeocode(value.Latitude, value.Longitude);
 
         // Gem den nyeste lokation i memory
         _latestLocation = value;
@@ -80,7 +100,11 @@ public class TrackingDeviceController : ControllerBase
         if (latest == null)
             return BadRequest("No location available");
 
-        var geocodingService = new GeocodingService(new HttpClient(), new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
+        var geocodingService = new Geocoding(
+            new HttpClient(),
+            "mmvpt-tracker/1.0 (clib@hotmail.com)"
+        );
+
         string? address = await geocodingService.ReverseGeocode(latest.Latitude, latest.Longitude);
 
         var dto = new LocationDto
