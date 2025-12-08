@@ -17,32 +17,7 @@ const app = Vue.createApp({
     },
 
     methods: {
-        async fetchAddress(lat, lon) {
-        try {
-            const response = await axios.get('https://nominatim.openstreetmap.org/reverse', {
-            params: {
-                format: 'json',
-                lat,
-                lon,
-                email: 'clib@hotmail.com'
-            },
-            headers: {
-                'User-Agent': 'mmvpt-tracker/1.0 (clib@hotmail.com)'
-            },
-            timeout: 10000 // 10s before timeout
-            });
-
-            const addr = response.data.address;
-            if (!addr) return response.data.display_name || 'Ukendt adresse';
-            return `${addr.road ?? ''} ${addr.house_number ?? ''}, ${addr.postcode ?? ''} ${addr.city ?? ''}, ${addr.country ?? ''}`;
-            } 
-            catch (error) {
-                console.error('Failed to fetch address', error);
-                return 'Ukendt adresse';
-            }
-        },
-
-            formatTimestamp(ts) {
+        formatTimestamp(ts) {
             const d = new Date(ts);
 
             const day = String(d.getDate()).padStart(2, '0');
@@ -69,8 +44,8 @@ const app = Vue.createApp({
                     timestamp: this.formatTimestamp(item.timestamp),
                     latitude: item.latitude,
                     longitude: item.longitude,
-                    address: 'Henter adresse...',  // placeholder
-                    source: item.source ?? 'Ukendt',
+                    address: item.address,
+                    source: item.source,
                     selected: false
                 }));
 
