@@ -58,7 +58,10 @@ public class TrackingDeviceController : ControllerBase
             _latestLocation.Longitude
         );
 
+        _latestLocation.Date = DateTime.UtcNow;
         _latestLocation.Source = "Manuelt";
+        _lastSavedTime = DateTime.UtcNow;
+
         return Ok(_repo.Add(_latestLocation));
     }
 
