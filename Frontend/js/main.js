@@ -12,7 +12,7 @@ const app = Vue.createApp({
 
      mounted() {
         this.initMap();
-        this.getDataFromRaspberry();
+        this.getDataFromDatabase();
         this.getLatestWithAddress();
     },
 
@@ -31,7 +31,7 @@ const app = Vue.createApp({
             return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
         },
 
-        async getDataFromRaspberry() {
+        async getDataFromDatabase() {
             try {
                 const response = await axios.get(baseUri);
 
@@ -48,12 +48,6 @@ const app = Vue.createApp({
                     source: item.source,
                     selected: false
                 }));
-
-                // Throttled sequential requests: ~2.1s between calls to avoid rate limits
-                for (const log of this.loggings) {
-                log.address = await this.fetchAddress(log.latitude, log.longitude);
-                await new Promise(r => setTimeout(r, 2100)); // ~2.1s delay
-                }
 
                 console.log(this.loggings);
 
@@ -107,7 +101,7 @@ const app = Vue.createApp({
             console.log("Track! saved:", response.data);
 
             // Reload data so the new DB entry appears immediately
-            await this.getDataFromRaspberry();
+            await this.getDataFromDatabase();
 
             } 
             catch (error) {
