@@ -29,7 +29,7 @@
             </div>
 
             <div class="headerDiv">
-              <span class="User">Bruger: Tanya</span>
+              <span class="User"><b>Bruger:</b> Tanya</span>
               <button @click="LogudafKonto" class="LogudafKonto">Log ud</button>
             </div>
           </div>
@@ -38,11 +38,18 @@
       <!-- Section1: Latest Location, Tracking-buttons and Map -->
       <main>
         <section class="Section1">
-          <div>
-            <p> Device: {{ deviceName }} </p>
-            <p> Status: <span class="greenText">Online</span></p>
-            <p> Tidspunkt: {{ loggings[0] ? loggings[0].timestamp : '' }} </p>
-            <p> Adresse: {{ loggings[0] ? loggings[0].address : '' }} </p>
+          <div class="infoBox">
+            <span class="label">Enhed:</span>
+            <span class="value">{{ deviceName }}</span>
+
+            <span class="label">Status:</span>
+            <span class="value greenText">Online</span>
+
+            <span class="label">Tidspunkt:</span>
+            <span class="value">{{ loggings[0] ? loggings[0].timestamp : '' }}</span>
+
+            <span class="label">Adresse:</span>
+            <span class="value">{{ loggings[0] ? loggings[0].address : '' }}</span>
           </div>
 
           <div class="findButtonDiv">
