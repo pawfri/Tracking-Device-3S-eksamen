@@ -38,6 +38,8 @@
       <!-- Section1: Latest Location, Tracking-buttons and Map -->
       <main>
         <section class="Section1">
+          <div class="infoContainer">
+          <div class="infoTitle">SENESTE LOKATION</div>
           <div class="infoBox">
             <span class="label">Enhed:</span>
             <span class="value">{{ deviceName }}</span>
@@ -51,6 +53,7 @@
             <span class="label">Adresse:</span>
             <span class="value">{{ loggings[0] ? loggings[0].address : '' }}</span>
           </div>
+        </div>
 
           <div class="findButtonDiv">
             <button @click="PostTrackButton" class="findButton">Track!</button>
@@ -58,7 +61,8 @@
             <button @click="stopIndicators" class="stopIndicatorsButton">Stop Indikators</button>
           </div>
         
-           <div id="map">{{  }}</div>
+          <div id="map">{{  }}</div>
+
         </section>
 
         <!-- Section2: Table at the bottom of the page -->
