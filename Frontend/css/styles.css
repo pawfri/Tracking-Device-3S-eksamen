@@ -221,3 +221,12 @@ header {
     padding: 0.6rem 0.6rem;
     font-size: 20px;
 }
+
+/* ------------- SECTION LOGIN: STYLING OF LOGIN FORM ------------- */
+.loginFormSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue Template</title>
+    <!-- Import Styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/styles.css" />
+    <!-- Import Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <!-- Import leaflet.js -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+  </head>
+  <body>
+    <div id="app">
+
+      <!-- Menu at the top -->
+      <header class="headerSection">
+          <div class="AccountSettings">
+            <div class="headerDiv">
+              <button @click="ManageEnheden" class="ManageEnheden">Konto & Enheder</button>
+              <button @click="ÆndreEnheder" class="ÆndreEnheder">Skift Enhed</button>
+            </div>
+
+            <div class="headerDiv">
+              <span class="User"><b>Bruger:</b> Tanya</span>
+              <button @click="LogudafKonto" class="LogudafKonto">Log ud</button>
+            </div>
+          </div>
+      </header>
+
+      <!-- Section1: Latest Location, Tracking-buttons and Map -->
+      <main>
+        <section class="Section1">
+          <div class="infoContainer">
+          <div class="infoTitle">SENESTE LOKATION</div>
+          <div class="infoBox">
+            <span class="label">Enhed:</span>
+            <span class="value">{{ deviceName }}</span>
+
+            <span class="label">Status:</span>
+            <span class="value greenText">Online</span>
+
+            <span class="label">Tidspunkt:</span>
+            <span class="value">{{ loggings[0] ? loggings[0].timestamp : '' }}</span>
+
+            <span class="label">Adresse:</span>
+            <span class="value">{{ loggings[0] ? loggings[0].address : '' }}</span>
+          </div>
+        </div>
+
+          <div class="findButtonDiv">
+            <button @click="PostTrackButton" class="findButton">Track!</button>
+            <button @click="stopTracking" class="stopButton">Stop Tracking</button>
+            <button @click="stopIndicators" class="stopIndicatorsButton">Stop Indikators</button>
+          </div>
+        
+          <div id="map">{{  }}</div>
+
+        </section>
+
+        <!-- Section2: Table at the bottom of the page -->
+        <section class="Section2">
+          <table class="table table-bordered table-striped w-100">
+            <thead class="thead-dark">
+              <tr>
+                <th>Tidspunkt</th>
+                <th>Status</th>
+                <th>Kilde</th>
+                <th>Addresse</th>
+                <th>Koordinater (lat/lon)</th>
+                <th>Aktion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(log, index) in pagedLoggings" :key="index">
+                <td>{{ log.timestamp }}</td>
+                <td class="greenText"> Online </td>
+                <td>{{ log.source }}</td>
+                <td>{{ log.address }}</td>
+                <td>{{ log.latitude }}, {{ log.longitude }}</td>
+                <td><input type="checkbox" v-model="log.selected"></td>
+              </tr>
+            </tbody>
+          </table>
+
+            <!-- Pagination controls -->
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <button class="page-link" @click="firstPage">Første</button>
+              </li>
+              <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <button class="page-link" @click="prevPage">Forrige</button>
+              </li>
+
+              <!-- Show visible page numbers -->
+              <li class="page-item" v-for="page in visiblePageNumbers" :key="page" :class="{ active: currentPage === page }">
+                <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+              </li>
+
+              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                <button class="page-link" @click="nextPage">Næste</button>
+              </li>
+              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                <button class="page-link" @click="lastPage">Sidste</button>
+              </li>
+            </ul>
+          </nav>
+
+        </section>
+      </main>
+      
+    </div>
+
+    <!-- Import Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Import App -->
+    <script src="./js/main.js"></script>
+
+    <!-- Mount App -->
+    <script>
+      const mountedApp = app.mount('#app')
+    </script>
+  </body>
+</html>
