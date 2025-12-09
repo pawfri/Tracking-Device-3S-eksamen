@@ -16,9 +16,11 @@ public class TrackingDeviceContext : DbContext
     }
 
     public DbSet<Location> Locations { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Location>().ToTable("Tracking_Location");
-    }
+		modelBuilder.Entity<Location>().ToTable("Tracking_User");
+	}
 }
