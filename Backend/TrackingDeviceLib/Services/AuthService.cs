@@ -22,9 +22,15 @@ public class AuthService
     // Returner user eller null
     public User? ValidateCredentials(string username, string password)
     {
-        var user = _repo.GetByUsername(username);
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            return null;
+
+        // Get user from DB using case-insensitive search
+        var user = _repo.GetByUsername(username.Trim());
         if (user == null) return null;
-        if (user.Password != password) return null;
+
+        // Simple password check
+        if (user.Password != password.Trim()) return null;
 
         return user;
     }

@@ -21,7 +21,11 @@ public class UserDBRepo : IUserDBRepo
 
     public User? GetByUsername(string username)
     {
+        if (string.IsNullOrWhiteSpace(username))
+            return null;
+
+        // Case-insensitive search with trimmed input
         return _context.Users
-                       .FirstOrDefault(u => u.Email == username);
+                       .FirstOrDefault(u => u.Email.ToLower() == username.Trim().ToLower());
     }
 }
