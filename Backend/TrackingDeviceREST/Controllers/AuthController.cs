@@ -18,6 +18,14 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
+    [HttpGet("current")]
+    public IActionResult GetCurrentUser()
+    {
+        var email = HttpContext.Session.GetString("User");
+        if (email == null) return Unauthorized();
+        return Ok(email);
+    }
+
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequestDto request)
     {

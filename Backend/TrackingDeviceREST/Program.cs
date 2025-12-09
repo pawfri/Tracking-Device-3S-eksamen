@@ -31,17 +31,12 @@ builder.Services.AddScoped<IUserDBRepo, UserDBRepo>();
 
 builder.Services.AddCors(options =>
 {
-    //options.AddPolicy("allowGetPut",
-    //builder =>
-    //builder.AllowAnyOrigin()
-    //.WithMethods("GET", "PUT")
-    //.AllowAnyHeader());
-
-    options.AddPolicy("allowAnything",
-	builder =>
-	builder.AllowAnyOrigin()
-	.AllowAnyMethod()
-	.AllowAnyHeader());
+    options.AddPolicy("allowAnything", builder =>
+        builder.WithOrigins("http://localhost:5500") // TODO: SKAL VI ÆNDRE NÅR VI KØRER WEBAPP ONLINE!
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials()
+    );
 });
 
 var app = builder.Build();

@@ -1,8 +1,10 @@
 const baseUri = 'https://mmvpt.azurewebsites.net/api/TrackingDevice';
+const authBaseUri = 'https://mmvpt.azurewebsites.net/api/Auth';
 
 const app = Vue.createApp({
     data() {
         return {
+            currentUser: null,
             loggings: [],
             deviceName: "Tanyas Taske",
             map: null,
@@ -16,6 +18,12 @@ const app = Vue.createApp({
         this.initMap();
         this.getDataFromDatabase();
         this.getLatestWithAddress();
+        this.fetchCurrentUser();
+
+        const form = document.getElementById('loginForm');
+        if (form) {
+            form.addEventListener('submit', this.handleLoginFormSubmit);
+        }
     },
 
     methods: {
@@ -128,7 +136,73 @@ const app = Vue.createApp({
         },
         lastPage() {
             this.goToPage(this.totalPages);
-        }
+        },
+
+        // Login Method
+        async loginUser(email, password) {
+            try {
+                const response = await axios.post(`${authBaseUri}/login`, {
+                    email: email,
+                    password: password
+                }, {
+                    withCredentials: true // session-cookie
+                });
+
+                console.log("Login succesfuld:", response.data);
+                
+                // Gem bruger-email i state
+                this.currentUser = email;
+
+                return true;
+            } catch (error) {
+                console.error("Login fejlede:", error.response?.data || error.message);
+                return false;
+            }
+        },
+
+        // Logout Method
+        async logoutUser() {
+            try {
+                const response = await axios.post(`${authBaseUri}/logout`, {}, {
+                    withCredentials: true
+                });
+                console.log("Logout succesfuld:", response.data);
+
+                // Ryd state
+                this.currentUser = null;
+
+            } catch (error) {
+                console.error("Logout fejlede:", error.response?.data || error.message);
+            }
+        },
+
+        // Current User
+        async fetchCurrentUser() {
+            try {
+                const response = await axios.get(`${authBaseUri}/current`, { withCredentials: true });
+                this.currentUser = response.data;
+                console.log("Current user:", this.currentUser);
+            } catch (error) {
+                this.currentUser = null;
+                console.error("Kunne ikke hente current user", error.response?.data || error.message);
+            }
+        },
+
+        // Form submit handler
+        handleLoginFormSubmit(event) {
+            event.preventDefault(); // Stop normal form-submit
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            this.loginUser(email, password).then(success => {
+                if (success) {
+                    alert('Login succesfuld!');
+                    window.location.href = 'overview.html';
+                } else {
+                    alert('Login fejlede!');
+                }
+            });
+        },
 
     },
     computed: {
