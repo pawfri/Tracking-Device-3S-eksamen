@@ -23,7 +23,15 @@ builder.Services.AddDbContext<TrackingDeviceContext>(options =>
 );
 
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(); // Session support
+//builder.Services.AddSession(); // Session support
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    /*options.Cookie.SecurePolicy = CookieSecurePolicy.None;*/ // only for localhost dev
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // must be true on HTTPS
+    options.Cookie.SameSite = SameSiteMode.None; // cross-origin allowed
+});
 builder.Services.AddHttpContextAccessor(); // Giver adgang til HttpContext
 
 builder.Services.AddScoped<AuthService>(); // login/logud service

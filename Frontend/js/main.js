@@ -14,17 +14,34 @@ const app = Vue.createApp({
         }
     },
 
-     mounted() {
-        this.initMap();
-        this.getDataFromDatabase();
-        this.getLatestWithAddress();
-        this.fetchCurrentUser();
+mounted() {
+    const form = document.getElementById('loginForm');
 
-        const form = document.getElementById('loginForm');
-        if (form) {
-            form.addEventListener('submit', this.handleLoginFormSubmit);
-        }
-    },
+    if (form) {
+        // On login page: attach login form submit
+        form.addEventListener('submit', this.handleLoginFormSubmit);
+    } else {
+        // On overview page: check login first
+        this.fetchCurrentUser(true).then(() => {
+            if (this.currentUser) {
+                // Initialize map immediately
+                this.initMap();
+
+                // Fetch database data and latest-with-address in parallel
+                Promise.all([
+                    this.getDataFromDatabase(),
+                    this.getLatestWithAddress()
+                ])
+                .then(() => {
+                    console.log("All initial data loaded.");
+                })
+                .catch(err => {
+                    console.error("Error loading initial data:", err);
+                });
+            }
+        });
+    }
+},
 
     methods: {
         formatTimestamp(ts) {
@@ -142,15 +159,13 @@ const app = Vue.createApp({
         async loginUser(email, password) {
             try {
                 const response = await axios.post(`${authBaseUri}/login`, {
-                    email: email,
-                    password: password
-                }, {
-                    withCredentials: true // session-cookie
-                });
+                    email,
+                    password
+                }, { withCredentials: true }); // send cookies
 
                 console.log("Login succesfuld:", response.data);
-                
-                // Save user in state
+
+                // Only set currentUser **after server accepted login**
                 this.currentUser = email;
 
                 return true;
@@ -180,61 +195,91 @@ const app = Vue.createApp({
         },
 
         // Current User
-        async fetchCurrentUser() {
+        async fetchCurrentUser(redirectIfNone = false) {
             try {
                 const response = await axios.get(`${authBaseUri}/current`, { withCredentials: true });
                 this.currentUser = response.data;
                 console.log("Current user:", this.currentUser);
+
+                if (!this.currentUser && redirectIfNone && !window.location.href.endsWith('index.html')) {
+                    // Only redirect if not already on index.html
+                    window.location.replace('index.html');
+                }
             } catch (error) {
                 this.currentUser = null;
+                if (redirectIfNone && !window.location.href.endsWith('index.html')) {
+                    window.location.replace('index.html');
+                }
                 console.error("Kunne ikke hente current user", error.response?.data || error.message);
             }
         },
 
         // Form submit handler
-        handleLoginFormSubmit(event) {
+        async handleLoginFormSubmit(event) {
             event.preventDefault(); // Stop normal form-submit
             const email = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            this.loginUser(email, password).then(success => {
-                if (success) {
-                    window.location.href = 'overview.html';
-                } else {
-                    alert('Ugyldigt login!');
+            // Try login
+            const loginSuccess = await this.loginUser(email, password);
+            if (!loginSuccess) {
+                alert('Ugyldigt login!');
+                return;
+            }
+
+            // Retry fetching current user until session is active
+            const maxAttempts = 10;
+            let currentUser = null;
+
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                try {
+                    const response = await axios.get(`${authBaseUri}/current`, { withCredentials: true });
+                    currentUser = response.data;
+                    if (currentUser) break; // Session active
+                } catch (err) {
+                    // Wait a bit before retrying
+                    await new Promise(r => setTimeout(r, 500));
                 }
-            });
+            }
+
+            if (currentUser) {
+                this.currentUser = currentUser;
+                // Redirect to overview page only after session is confirmed
+                window.location.href = 'overview.html';
+            } else {
+                alert('Login session kunne ikke etableres. Prøv igen.');
+            }
         },
 
-    },
-    computed: {
-    // Slice the array when reaching the set pageSize defined as a dataobject
-    pagedLoggings() {
-        const start = (this.currentPage - 1) * this.pageSize;
-        const end = start + this.pageSize;
-        return this.loggings.slice(start, end);
-    },
+        },
+        computed: {
+        // Slice the array when reaching the set pageSize defined as a dataobject
+        pagedLoggings() {
+            const start = (this.currentPage - 1) * this.pageSize;
+            const end = start + this.pageSize;
+            return this.loggings.slice(start, end);
+        },
 
-    // Total number of pages in the table
-    totalPages() {
-        return Math.ceil(this.loggings.length / this.pageSize);
-    },
+        // Total number of pages in the table
+        totalPages() {
+            return Math.ceil(this.loggings.length / this.pageSize);
+        },
 
-    // Which page numbers to show in the pagination control
-    visiblePageNumbers() {
-        const pages = [];
-        const maxButtons = 5; // Set how many page numbers around current page
-        let start = Math.max(1, this.currentPage - 2);
-        let end = Math.min(this.totalPages, start + maxButtons - 1);
+        // Which page numbers to show in the pagination control
+        visiblePageNumbers() {
+            const pages = [];
+            const maxButtons = 5; // Set how many page numbers around current page
+            let start = Math.max(1, this.currentPage - 2);
+            let end = Math.min(this.totalPages, start + maxButtons - 1);
 
-        // Adjust start if near the end
-        start = Math.max(1, end - maxButtons + 1);
+            // Adjust start if near the end
+            start = Math.max(1, end - maxButtons + 1);
 
-        for (let i = start; i <= end; i++) {
-            pages.push(i);
-        }
+            for (let i = start; i <= end; i++) {
+                pages.push(i);
+            }
 
-        return pages;
+            return pages;
         }
     }
 });
