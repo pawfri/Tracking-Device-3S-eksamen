@@ -21,10 +21,13 @@ builder.Services.AddScoped<ITrackingDeviceRepo, TrackingDeviceDBRepo>();
 builder.Services.AddDbContext<TrackingDeviceContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(); // Session support
 builder.Services.AddHttpContextAccessor(); // Giver adgang til HttpContext
 
-builder.Services.AddScoped<AuthenticationService>(); // Din login/logud service
+builder.Services.AddScoped<AuthService>(); // login/logud service
+builder.Services.AddScoped<IUserDBRepo, UserDBRepo>();
 
 builder.Services.AddCors(options =>
 {

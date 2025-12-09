@@ -12,9 +12,16 @@ namespace TrackingDeviceLib.Services.Repositories;
 
 public class UserDBRepo : IUserDBRepo
 {
-	private readonly TrackingDeviceContext _context;
-	public User? GetByUsername(string username)
-	{
-		return _context.Users.Find(username);
-	}
+    private readonly TrackingDeviceContext _context;
+
+    public UserDBRepo(TrackingDeviceContext context)
+    {
+        _context = context;
+    }
+
+    public User? GetByUsername(string username)
+    {
+        return _context.Users
+                       .FirstOrDefault(u => u.Email == username);
+    }
 }
