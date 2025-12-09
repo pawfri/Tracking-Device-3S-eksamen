@@ -21,6 +21,6 @@ public class TrackingDeviceContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Location>().ToTable("Tracking_Location");
-		modelBuilder.Entity<Location>().ToTable("Tracking_User");
+		modelBuilder.Entity<User>().ToTable("Tracking_User");
 	}
 }
