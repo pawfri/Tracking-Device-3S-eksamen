@@ -1,4 +1,9 @@
+html {
+  font-size: 16px; /* base size, respects OS scaling */
+}
+
 h1 {
+    font-size: clamp(2rem, 4vw, 3rem); /* scales with screen size */
     font-size: 50px;
     color: blue;
   }
@@ -160,7 +165,7 @@ header {
 /* Title over the information box */
 .Section1 .infoTitle {
   font-weight: bold;
-  font-size: 2.5rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
   background-color: #ffffff;
   margin-bottom: 0.5rem;
   border-bottom: 2px solid #ffffff;
@@ -175,7 +180,7 @@ header {
   grid-template-columns: max-content auto;
   row-gap: 0.5rem;
   column-gap: 1rem;
-  font-size: 1.8rem;
+  font-size: 1.7rem;
 }
 
 .Section1 .infoBox .label {
