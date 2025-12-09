@@ -13,6 +13,12 @@ public class Location
     public string? Source { get; set; }
     public string? Address {  get; set; }
 
+    // Foreign key to Device
+    public int DeviceId { get; set; }
+
+    // Optional navigation property for EF Core
+    public Device Device { get; set; }
+
     [JsonPropertyName("timestamp")]
     public DateTime Date
     {
