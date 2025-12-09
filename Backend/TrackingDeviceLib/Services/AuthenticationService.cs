@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using TrackingDeviceLib.Services.Interfaces;
 
 namespace TrackingDeviceLib.Services;
@@ -11,6 +12,7 @@ namespace TrackingDeviceLib.Services;
 public class AuthenticationService
 {
 	private readonly IUserDBRepo _repo;
+	private readonly IHttpContextAccessor _http;
 
 	public AuthenticationService(IUserDBRepo repo)
 	{
@@ -26,7 +28,6 @@ public class AuthenticationService
 
 	public void Logout()
 	{
-		// token cleanup, session clear osv.
-		//HttpContext.Session.Clear();
+		_http.HttpContext.Session.Clear();
 	}
 }

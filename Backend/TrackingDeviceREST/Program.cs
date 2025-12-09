@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -20,7 +21,10 @@ builder.Services.AddScoped<ITrackingDeviceRepo, TrackingDeviceDBRepo>();
 builder.Services.AddDbContext<TrackingDeviceContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+builder.Services.AddSession(); // Session support
+builder.Services.AddHttpContextAccessor(); // Giver adgang til HttpContext
 
+builder.Services.AddScoped<AuthenticationService>(); // Din login/logud service
 
 builder.Services.AddCors(options =>
 {
@@ -46,6 +50,7 @@ app.MapOpenApi();
 
 app.UseCors("allowAnything");
 
+app.UseSession(); // Aktiver session-håndtering
 app.UseAuthorization();
 
 app.MapControllers();
