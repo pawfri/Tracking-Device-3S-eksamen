@@ -30,7 +30,7 @@
 
             <div class="headerDiv">
               <span class="User"><b>Bruger:</b> {{ currentUser }}</span>
-              <button @click="LogudafKonto" class="LogudafKonto">Log ud</button>
+              <button @click="() => logoutUser()" class="LogudafKonto">Log ud</button>
             </div>
           </div>
       </header>

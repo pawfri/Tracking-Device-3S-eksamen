@@ -150,7 +150,7 @@ const app = Vue.createApp({
 
                 console.log("Login succesfuld:", response.data);
                 
-                // Gem bruger-email i state
+                // Save user in state
                 this.currentUser = email;
 
                 return true;
@@ -166,13 +166,16 @@ const app = Vue.createApp({
                 const response = await axios.post(`${authBaseUri}/logout`, {}, {
                     withCredentials: true
                 });
-                console.log("Logout succesfuld:", response.data);
+                console.log("Logud succesfuld:", response.data);
 
-                // Ryd state
+                // Clear state
                 this.currentUser = null;
 
+                // Redirect to index.html
+                window.location.href = 'index.html';
+
             } catch (error) {
-                console.error("Logout fejlede:", error.response?.data || error.message);
+                console.error("Logud fejlede:", error.response?.data || error.message);
             }
         },
 
@@ -196,10 +199,9 @@ const app = Vue.createApp({
 
             this.loginUser(email, password).then(success => {
                 if (success) {
-                    alert('Login succesfuld!');
                     window.location.href = 'overview.html';
                 } else {
-                    alert('Login fejlede!');
+                    alert('Ugyldigt login!');
                 }
             });
         },
