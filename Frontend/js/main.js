@@ -66,6 +66,7 @@ const form = document.getElementById('loginForm');
                 // Initialize logs without addresses first
                 this.loggings = sorted.map(item => ({
                     timestamp: this.formatTimestamp(item.timestamp),
+                    id: item.id,
                     latitude: item.latitude,
                     longitude: item.longitude,
                     address: item.address,
@@ -248,6 +249,45 @@ const form = document.getElementById('loginForm');
                 alert('Login session kunne ikke etableres. Prøv igen.');
             }
         },
+
+        async deleteSelected() {
+    const selectedLogs = this.loggings.filter(log => log.selected);
+    if (!selectedLogs.length) {
+        alert("Ingen lokationer valgt.");
+        return;
+    }
+
+    if (!confirm(`Er du sikker på at du vil slette ${selectedLogs.length} lokation(er)?`)) return;
+
+    try {
+        for (const log of selectedLogs) {
+            await axios.delete(`${baseUri}/${log.id}`);
+        }
+
+        // Remove deleted logs from frontend state
+        this.loggings = this.loggings.filter(log => !log.selected);
+
+        // If latest location was deleted, update map
+        if (this.latestWithAddress && selectedLogs.some(log => log.id === this.latestWithAddress.id)) {
+            await this.getLatestWithAddress();
+            if (this.latestWithAddress && this.map) {
+                const lat = this.latestWithAddress.latitude;
+                const lon = this.latestWithAddress.longitude;
+
+                this.map.setView([lat, lon], 17);
+                if (this._latestMarker) this.map.removeLayer(this._latestMarker);
+                this._latestMarker = L.marker([lat, lon])
+                                     .addTo(this.map)
+                                     .bindPopup(this.deviceName)
+                                     .openPopup();
+            }
+        }
+
+    } catch (err) {
+        console.error("Kunne ikke slette lokationer:", err);
+        alert("Der opstod en fejl ved sletning. Se konsollen for detaljer.");
+    }
+}
 
         },
         computed: {
