@@ -78,8 +78,8 @@
                 <th>Aktion</th>
               </tr>
             </thead>
-            <div class="deleteButtonDiv mb-2">
-              <button class="btn btn-danger" @click="deleteSelected">Slet markerede lokationer</button>
+            <div class="deleteButtonDiv">
+              <button class="btn btn-danger" @click="deleteSelected">Slet markerede lokation(er)</button>
             </div>
             <tbody>
               <tr v-for="(log, index) in pagedLoggings" :key="index">

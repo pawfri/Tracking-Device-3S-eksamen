@@ -105,6 +105,11 @@ header {
   margin: 0.25rem -2rem 0.5rem 1rem;
 }
 
+.deleteButtonDiv {
+  margin-bottom: 5px;
+  float: right;
+}
+
 .findButtonDiv {
   display: flex;
   flex-direction: column;
@@ -205,6 +210,7 @@ header {
   max-width: 100%;
   height: 30rem;
   margin-top: 0.5rem;
+  margin-bottom: -2rem;
 }
 
 /* ------------- SECTION 2: BOTTOM HALF OF PAGE ------------- */
