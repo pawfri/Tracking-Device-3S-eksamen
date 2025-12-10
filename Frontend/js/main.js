@@ -1,5 +1,5 @@
-const baseUri = 'https://mmvpt.azurewebsites.net/api/TrackingDevice';
-const authBaseUri = 'https://mmvpt.azurewebsites.net/api/Auth';
+const baseUri = 'https://mmvpt-rest.azurewebsites.net/api/TrackingDevice';
+const authBaseUri = 'https://mmvpt-rest.azurewebsites.net/api/Auth';
 
 const app = Vue.createApp({
     data() {
