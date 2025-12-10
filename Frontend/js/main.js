@@ -227,7 +227,7 @@ const form = document.getElementById('loginForm');
             }
 
             // Retry fetching current user until session is active
-            const maxAttempts = 10;
+            const maxAttempts = 2;
             let currentUser = null;
 
             for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -237,7 +237,7 @@ const form = document.getElementById('loginForm');
                     if (currentUser) break; // Session active
                 } catch (err) {
                     // Wait a bit before retrying
-                    await new Promise(r => setTimeout(r, 500));
+                    await new Promise(r => setTimeout(r, 300));
                 }
             }
 
