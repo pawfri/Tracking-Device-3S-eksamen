@@ -15,29 +15,26 @@ const app = Vue.createApp({
     },
 
 mounted() {
-    const form = document.getElementById('loginForm');
+const form = document.getElementById('loginForm');
 
     if (form) {
-        // On login page: attach login form submit
         form.addEventListener('submit', this.handleLoginFormSubmit);
     } else {
-        // On overview page: check login first
-        this.fetchCurrentUser(true).then(() => {
+        this.fetchCurrentUser(true).then(async () => {
             if (this.currentUser) {
-                // Initialize map immediately
-                this.initMap();
-
-                // Fetch database data and latest-with-address in parallel
-                Promise.all([
-                    this.getDataFromDatabase(),
-                    this.getLatestWithAddress()
-                ])
-                .then(() => {
+                try {
+                    await this.getDataFromDatabase();          // fetch DB data
+                    await this.getLatestWithAddress();        // fetch latest-with-address
                     console.log("All initial data loaded.");
-                })
-                .catch(err => {
+
+                    // Initialize map now that latestWithAddress is guaranteed
+                    const lat = this.latestWithAddress?.latitude ?? 55.630853333;
+                    const lon = this.latestWithAddress?.longitude ?? 12.078415;
+                    this.initMap(lat, lon);
+                } catch (err) {
                     console.error("Error loading initial data:", err);
-                });
+                    this.initMap(55.630853333, 12.078415);  // fallback
+                }
             }
         });
     }
@@ -105,21 +102,22 @@ mounted() {
             }
         },
 
-        initMap() {
+        initMap(lat, lon) {
             if (typeof L === 'undefined') {
-                console.error('Leaflet (L) is not loaded. Include Leaflet JS/CSS before this script.');
+                console.error('Leaflet (L) is not loaded.');
                 return;
             }
-            
-            console.log("Startinng: Initializing Map");
 
-            this.map = L.map('map').setView([55.630853333, 12.078415], 17);
+            this.map = L.map('map').setView([lat, lon], 17);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '&copy; OpenStreetMap contributors'
             }).addTo(this.map);
 
-            console.log("Finished: Map initialized");         
+            // Optional: marker for latest location
+            L.marker([lat, lon]).addTo(this.map).bindPopup("Tanyas Taske").openPopup();
+
+            console.log("Map initialized at", lat, lon);
         },
 
         async PostTrackButton() {
