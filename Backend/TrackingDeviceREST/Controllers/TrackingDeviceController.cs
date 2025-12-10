@@ -122,7 +122,7 @@ public class TrackingDeviceController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult DeleteLocation(int id)
+    public IActionResult Delete(int id)
     {
         var location = _repo.GetById(id);
         if (location == null)
@@ -138,9 +138,4 @@ public class TrackingDeviceController : ControllerBase
     //{
     //}
 
-    //// DELETE api/<TrackingDeviceController>/5
-    //[HttpDelete("{id}")]
-    //public void Delete(int id)
-    //{
-    //}
 }
