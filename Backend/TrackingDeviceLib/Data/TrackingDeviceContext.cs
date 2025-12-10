@@ -37,6 +37,7 @@ public class TrackingDeviceContext : DbContext
             .HasOne(l => l.Device)
             .WithMany(d => d.Locations)
             .HasForeignKey(l => l.DeviceId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(false);
     }
 }

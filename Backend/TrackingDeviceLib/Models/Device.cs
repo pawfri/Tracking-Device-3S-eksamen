@@ -12,7 +12,7 @@ public class Device
 
     // Foreign key to User
     public int? UserId { get; set; }
-    public User User { get; set; }
+    public User? User { get; set; }
 
     // Navigation property for Locations used by EF Core
     public ICollection<Location> Locations { get; set; } = new List<Location>();
