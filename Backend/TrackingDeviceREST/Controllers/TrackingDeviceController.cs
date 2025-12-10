@@ -121,6 +121,17 @@ public class TrackingDeviceController : ControllerBase
         return Ok(dto);
     }
 
+    [HttpDelete("{id}")]
+    public IActionResult DeleteLocation(int id)
+    {
+        var location = _repo.GetById(id);
+        if (location == null)
+            return NotFound($"Location with ID {id} not found.");
+
+        _repo.Delete(id);
+        return Ok($"Location with ID {id} deleted.");
+    }
+
     //// PUT api/<TrackingDeviceController>/5
     //[HttpPut("{id}")]
     //public void Put(int id, [FromBody] string value)

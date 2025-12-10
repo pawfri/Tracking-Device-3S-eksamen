@@ -7,5 +7,6 @@ namespace TrackingDeviceLib.Services.Interfaces
 		Location Add(Location location);
 		List<Location> GetAll();
 		Location? GetById(int id);
-	}
+        void Delete(int id);
+    }
 }

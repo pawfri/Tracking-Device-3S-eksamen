@@ -36,4 +36,9 @@ public class TrackingDeviceRepo : ITrackingDeviceRepo
 		_locations.Add(location);
 		return location;
 	}
+
+    public void Delete(int id)
+    {
+		// TO DO
+    }
 }

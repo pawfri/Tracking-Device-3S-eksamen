@@ -34,4 +34,14 @@ public class TrackingDeviceDBRepo : ITrackingDeviceRepo
     {
         return _context.Locations.Find(id);
     }
+
+    public void Delete(int id)
+    {
+        var location = _context.Locations.Find(id);
+        if (location != null)
+        {
+            _context.Locations.Remove(location);
+            _context.SaveChanges();
+        }
+    }
 }
