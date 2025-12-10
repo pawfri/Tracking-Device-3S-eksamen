@@ -18,6 +18,11 @@ body {
   margin-left: 50px;
 }
 
+button:focus {
+  outline: none !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
 /* ------------- HEADER ------------- */
 
 /* Header Layout */
@@ -89,13 +94,17 @@ header {
   padding: 3.5rem 6.5rem;
   font-weight: bold;
   margin: 0.5rem -2rem 0.25rem 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .stopButton {
-  background-color: #FF0000;
+  background-color: #ff5e00;
   padding: 0.75rem 2rem;
   font-weight: bold;
   margin: 0.25rem -2rem 0.25rem 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .stopIndicatorsButton {
@@ -103,10 +112,12 @@ header {
   padding: 0.75rem 2rem;
   font-weight: bold;
   margin: 0.25rem -2rem 0.5rem 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .deleteButtonDiv {
-  margin-bottom: 5px;
+  margin-bottom: 0.6rem;
   float: right;
 }
 
@@ -126,7 +137,7 @@ header {
 }
 
 .stopButton:hover {
-  background-color: #b10000;
+  background-color: #ca680b;
 }
 
 .stopIndicatorsButton:hover {
@@ -210,7 +221,17 @@ header {
   max-width: 100%;
   height: 30rem;
   margin-top: 0.5rem;
-  margin-bottom: -2rem;
+  margin-bottom: -1.9rem;
+
+  /* Default border skjult */
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: border 0.3s ease;
+}
+
+/* Når Leaflet har loaded tiles */
+.leaflet-container.leaflet-loaded {
+  border-color: #333;
 }
 
 /* ------------- SECTION 2: BOTTOM HALF OF PAGE ------------- */
@@ -234,11 +255,143 @@ header {
     font-size: 20px;
 }
 
-/* ------------- SECTION LOGIN: STYLING OF LOGIN FORM ------------- */
+/* Checkboxes size in the table */
+.Section2 input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.25rem;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+/* ----------------- LOGIN: HEADER STYLE ----------------- */
+
+.headerSection {
+    background-color: #ffffff;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: center;   /* <-- center text horizontally */
+    align-items: center;       /* <-- center vertically */
+    margin-bottom: 1.5rem;
+}
+
+.headerTitle {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+
+/* ------------- LOGIN: STYLING OF LOGIN FORM ------------- */
 .loginFormSection {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 80vh;
+  align-items: center;
+  height: 85vh;
+}
+
+.loginCard {
+  background: #ffffff;
+  padding: 2.5rem 3rem;
+  border-radius: 0.6rem;
+  box-shadow: 0px 4px 20px rgba(0,0,0,0.10);
+  width: 450px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.loginTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.loginSubtitle {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.loginLabel {
+  text-align: left;
+  font-weight: bold;
+  margin-top: 0.7rem;
+  margin-bottom: 0.2rem;
+  display: block;
+}
+
+.loginInput {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 0.3rem;
+  border: 1px solid #ccc;
+  margin-bottom: 0.7rem;
+  transition: border 0.2s;
+}
+
+.loginInput:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 1rem 0.7rem;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.loginButton:hover {
+  background-color: #0069d9;
+}
+
+.loginButton:active {
+  transform: translateY(1px);
+}
+
+/* ------------- LOGIN: FOOTER ------------- */
+
+.footerSection {
+    text-align: center;
+    font-size: 1rem;
+    color: #666;
+    margin-top: 3rem;
+    padding: 1rem 0;
+    border-top: 1px solid #e0e0e0;
+    width: 100%;
+}
+
+.custom-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #333; /* mørk baggrund */
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.custom-alert.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1.05);
 }

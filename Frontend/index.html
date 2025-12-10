@@ -11,33 +11,36 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
      crossorigin=""/>
-
   </head>
+
   <body>
     <div id="app">
 
-      <!-- Menu at the top -->
+      <!-- Header Section -->
       <header class="headerSection">
-
+        <h1 class="headerTitle">Tracking Device</h1>
       </header>
 
-      <!-- Section1: Latest Location, Tracking-buttons and Map -->
+      <!-- Section1: The login form -->
       <main>
         <section class="loginFormSection">
+
+          <div class="loginCard">
+
+            <h2 class="loginTitle">Velkommen</h2>
+            <p class="loginSubtitle">Log ind for at fortsætte</p>
+
             <form id="loginForm">
-                <label for="username">Username</label><br>
-                <input type="text" id="username" name="username" required><br>
 
-                <label for="password">Password</label><br>
-                <input type="password" id="password" name="password" required><br><br>
+              <label for="username" class="loginLabel">E-mail</label>
+              <input type="text" id="username" name="username" class="loginInput" required>
 
-                <input type="submit" value="Login">
+              <label for="password" class="loginLabel">Kodeord</label>
+              <input type="password" id="password" name="password" class="loginInput" required>
+
+              <button type="submit" class="loginButton">Log ind</button>
             </form>
-        </section>
-
-        <!-- Section2: Table at the bottom of the page -->
-        <section class="Section2">
-
+          </div>
 
         </section>
       </main>
@@ -55,4 +58,11 @@
       const mountedApp = app.mount('#app')
     </script>
   </body>
+
+  <footer class="footerSection">
+    Tracking Device Applikation af (MMVPT) 
+    Mikka, Medina, Valdemar, Patrick & Tobias | 
+    Datamatiker 3. Semester Eksamens Projekt, 2025
+  </footer>
+
 </html>

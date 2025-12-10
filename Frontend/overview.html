@@ -24,13 +24,13 @@
       <header class="headerSection">
           <div class="AccountSettings">
             <div class="headerDiv">
-              <button @click="ManageEnheden" class="ManageEnheden">Konto & Enheder</button>
-              <button @click="ÆndreEnheder" class="ÆndreEnheder">Skift Enhed</button>
+              <button @click="ManageDevice" class="ManageEnheden" title="Administrér din konto og enheder">Konto & Enheder</button>
+              <button @click="ChangeDevice" class="ChangeDevice" title="Skift mellem dine enheder">Skift Enhed</button>
             </div>
 
             <div class="headerDiv">
               <span class="User"><b>Bruger:</b> {{ currentUser }}</span>
-              <button @click="logoutUser" class="LogudafKonto">Log ud</button>
+              <button @click="logoutUser" class="LogoutUser" title="Log ud af din konto">Log ud</button>
             </div>
           </div>
       </header>
@@ -45,7 +45,7 @@
             <span class="value">{{ deviceName }}</span>
 
             <span class="label">Status:</span>
-            <span class="value greenText">Online</span>
+            <span class="value greenText"><b>Online</b></span>
 
             <span class="label">Tidspunkt:</span>
             <span class="value">{{ loggings[0] ? loggings[0].timestamp : '' }}</span>
@@ -56,12 +56,12 @@
         </div>
 
           <div class="findButtonDiv">
-            <button @click="PostTrackButton" class="findButton">Track!</button>
-            <button @click="stopTracking" class="stopButton">Stop Tracking</button>
-            <button @click="stopIndicators" class="stopIndicatorsButton">Stop Indikators</button>
+            <button @click="PostTrackButton" class="findButton" title="Hent enhedens nuværende position og start automatisk tracking, hvis denne er stoppet">Track!</button>
+            <button @click="stopTracking" class="stopButton" title="Stopper automatisk tracking af enheden">Stop Tracking</button>
+            <button @click="stopIndicators" class="stopIndicatorsButton" title="Stopper indikatorer på enheden såsom vibration og lys">Stop Indikatorer</button>
           </div>
         
-          <div id="map">{{  }}</div>
+          <div id="map"></div>
 
         </section>
 
@@ -75,11 +75,11 @@
                 <th>Kilde</th>
                 <th>Addresse</th>
                 <th>Koordinater (lat/lon)</th>
-                <th>Aktion</th>
+                <th>Markér</th>
               </tr>
             </thead>
             <div class="deleteButtonDiv">
-              <button class="btn btn-danger" @click="deleteSelected">Slet markerede lokationer</button>
+              <button class="btn btn-danger" @click="deleteSelected" title="Slet alle valgte lokationer permanent">Slet markerede lokationer</button>
             </div>
             <tbody>
               <tr v-for="(log, index) in pagedLoggings" :key="index">
