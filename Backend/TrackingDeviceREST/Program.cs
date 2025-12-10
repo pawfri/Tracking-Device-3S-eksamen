@@ -40,7 +40,7 @@ builder.Services.AddScoped<IUserDBRepo, UserDBRepo>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("allowAnything", builder =>
-        builder.WithOrigins("http://localhost:5500", "http://127.0.0.1:5500") // TODO: SKAL VI ÆNDRE/TILFØJE LINK TIL NÅR VI KØRER WEBAPP ONLINE!
+        builder.WithOrigins("http://localhost:5500", "http://127.0.0.1:5500", "https://mmvpt-webapp.azurewebsites.net")
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials()
