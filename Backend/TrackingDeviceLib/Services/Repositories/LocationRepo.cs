@@ -8,12 +8,12 @@ using TrackingDeviceLib.Services.Interfaces;
 
 namespace TrackingDeviceLib.Services.Repositories;
 
-public class TrackingDeviceRepo : ITrackingDeviceRepo
+public class LocationRepo : ILocationRepo
 {
 	private readonly List<Location> _locations = new();
 	private int _nextId = 4;
 
-    public TrackingDeviceRepo()
+    public LocationRepo()
     {
         _locations.Add(new Location(1, 10.0000, 20.0000, DateTime.Parse("2025-01-12T11:15:00"), "Automatisk", "Maglegårdsvej 2, 4000 Roskilde, Denmark"));
         _locations.Add(new Location(2 ,10.0000, 20.0000, DateTime.Parse("2025-01-12T12:16:00"), "Automatisk", "Maglegårdsvej 2, 4000 Roskilde, Denmark"));

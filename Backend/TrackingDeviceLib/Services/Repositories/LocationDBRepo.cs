@@ -9,11 +9,11 @@ using TrackingDeviceLib.Services.Interfaces;
 
 namespace TrackingDeviceLib.Services.Repositories;
 
-public class TrackingDeviceDBRepo : ITrackingDeviceRepo
+public class LocationDBRepo : ILocationRepo
 {
     private readonly TrackingDeviceContext _context;
 
-    public TrackingDeviceDBRepo(TrackingDeviceContext context)
+    public LocationDBRepo(TrackingDeviceContext context)
     {
         _context = context;
     }

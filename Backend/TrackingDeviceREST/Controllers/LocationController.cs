@@ -13,14 +13,14 @@ namespace TrackingDeviceREST.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class TrackingDeviceController : ControllerBase
+public class LocationController : ControllerBase
 {
-	private ITrackingDeviceRepo _repo;
+	private ILocationRepo _repo;
 	public static Location? _latestLocation;
     public static DateTime _lastSavedTime = DateTime.MinValue;
 
 
-	public TrackingDeviceController(ITrackingDeviceRepo repo)
+	public LocationController(ILocationRepo repo)
 	{
 		_repo = repo;
 	}
@@ -79,10 +79,10 @@ public class TrackingDeviceController : ControllerBase
 
         value.Address = await geocoding.ReverseGeocode(value.Latitude, value.Longitude);
 
-        // Gem den nyeste lokation i memory
+        // Save newest location in memory
         _latestLocation = value;
 
-        // Hvis det er første gang eller der er gået 3 minutter
+        // If first time or minimum 3 minutter
         if ((DateTime.UtcNow - _lastSavedTime).TotalMinutes >= 3)
         {
             _lastSavedTime = DateTime.UtcNow;
@@ -91,7 +91,7 @@ public class TrackingDeviceController : ControllerBase
             return Ok(_repo.Add(value));
         }
 
-        // ..ellers gemmes lokationen ikke i databasen endnu
+        // ..otherwise location isn't saved in the database yet
         return Ok("Location updated, but not saved yet");
     }
 
@@ -131,11 +131,5 @@ public class TrackingDeviceController : ControllerBase
         _repo.Delete(id);
         return Ok($"Location with ID {id} deleted.");
     }
-
-    //// PUT api/<TrackingDeviceController>/5
-    //[HttpPut("{id}")]
-    //public void Put(int id, [FromBody] string value)
-    //{
-    //}
 
 }

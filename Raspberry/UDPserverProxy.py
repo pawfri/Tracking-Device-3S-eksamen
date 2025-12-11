@@ -10,7 +10,7 @@ sock_receiver.bind(("", PORT))
 print("Proxy UDP Receiver started")
 print(f'Listening for incoming UDP messages on port {PORT}')
 
-REST_API_URL = 'https://mmvpt-rest.azurewebsites.net/api/TrackingDevice'
+REST_API_URL = 'https://mmvpt-rest.azurewebsites.net/api/Location'
 
 while True:
     msg, clientAdr = sock_receiver.recvfrom(3000)

@@ -2,7 +2,7 @@
 
 namespace TrackingDeviceLib.Services.Interfaces
 {
-	public interface ITrackingDeviceRepo
+	public interface ILocationRepo
 	{
 		Location Add(Location location);
 		List<Location> GetAll();

@@ -17,7 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient<Geocoding>();
-builder.Services.AddScoped<ITrackingDeviceRepo, TrackingDeviceDBRepo>();
+builder.Services.AddScoped<ILocationRepo, LocationDBRepo>();
 builder.Services.AddDbContext<TrackingDeviceContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );

@@ -14,7 +14,7 @@ namespace TestREST
     public sealed class TestREST
     {
 
-        private static readonly TrackingDeviceRepo _repo = new TrackingDeviceRepo();
+        private static readonly LocationRepo _repo = new LocationRepo();
 
         /// <summary>
         /// Tester at Repository oprettet et objekt
@@ -52,7 +52,7 @@ namespace TestREST
 		public void UniqueId()
         {
 			// Arrange
-			var repo = new TrackingDeviceRepo();
+			var repo = new LocationRepo();
 			var date = DateTime.Parse("2024-05-01T12:00:00Z", null, DateTimeStyles.RoundtripKind);
 
 			var model1 = new Location(12.3456, 65.4321, date, "Automatisk", "Maglegårdsvej 2, 4000 Roskilde, Denmark");
