@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestREST", "TestREST\TestRE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSeleniumVue", "TestSeleniumVue\TestSeleniumVue.csproj", "{9DA58E61-1A5C-4FCA-9C37-A4C3F7EF451C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordHasherConsoleApp", "PasswordHasherConsoleApp\PasswordHasherConsoleApp.csproj", "{75E33EA9-B3B7-498B-A4FA-2192AA06571A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9DA58E61-1A5C-4FCA-9C37-A4C3F7EF451C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DA58E61-1A5C-4FCA-9C37-A4C3F7EF451C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DA58E61-1A5C-4FCA-9C37-A4C3F7EF451C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75E33EA9-B3B7-498B-A4FA-2192AA06571A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75E33EA9-B3B7-498B-A4FA-2192AA06571A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75E33EA9-B3B7-498B-A4FA-2192AA06571A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75E33EA9-B3B7-498B-A4FA-2192AA06571A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
